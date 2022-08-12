@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "130720131434",
+    "project_id": "auction-clean-architecture",
+    "storage_bucket": "auction-clean-architecture.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130720131434:android:3f5ae946a6467556ba1d13",
+        "android_client_info": {
+          "package_name": "com.example.auction_clean_architecture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130720131434-serastnnm9emkunus5uakko973teluv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAI2QQSy5vhPlBxwcDW2FDA_DTD-ydqDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130720131434-serastnnm9emkunus5uakko973teluv2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "130720131434-rosku0llr3v3l69u3cgcjrfl53j4ml21.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.auctionCleanArchitecture"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
