@@ -21,3 +21,18 @@ class EmptyCacheFailure extends Failure {
   @override
   List<Object> get props => [];
 }
+
+class AlreadyUsedEmailFailure extends Failure {
+  @override
+  List<Object> get props => [];
+}
+
+class UserNotFoundFailure extends Failure {
+  @override
+  List<Object> get props => [];
+}
+
+class WrongPasswordFailure extends Failure {
+  @override
+  List<Object> get props => [];
+}

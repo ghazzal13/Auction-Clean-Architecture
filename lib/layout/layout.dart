@@ -3,6 +3,10 @@ import 'package:auction_clean_architecture/features/authentication/cubit/auth_me
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../features/posts/presentation/pages/add_edit_post/add_post_screen.dart';
+import '../features/posts/presentation/pages/posts_pages/posts_page.dart';
+import '../features/posts/presentation/pages/profile_page/my_profile_screen.dart';
+
 class ManagementLayout extends StatefulWidget {
   const ManagementLayout({Key? key}) : super(key: key);
 
@@ -14,9 +18,9 @@ class _ManagementLayoutState extends State<ManagementLayout> {
   int selectedIndex = 0;
   var currentUser;
   static const List<Widget> _widgetOptions = <Widget>[
-    // PostsPage(),
-    // AddPostPage(),
-    // ProfileScreen()
+    PostsPage(),
+    AddPostPage(),
+    ProfileScreen()
   ];
 
   void onselect(int x) {
