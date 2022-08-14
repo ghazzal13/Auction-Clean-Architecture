@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'features/posts/di/posts_injector.dart' as di;
+import 'features/posts/di/posts_injector.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'layout/border/bording_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await di.init();
+  await di.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -34,16 +34,11 @@ class _MyAppState extends State<MyApp> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       onBording = prefs.getBool('onBordering')!;
-
-      print('ddddddddddddddddddddddddddddddddddddddddddd');
-      print(onBording);
     });
   }
 
   @override
   void initState() {
-    print(onBording);
-    print('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
     super.initState();
     getBorderCachedData();
   }
