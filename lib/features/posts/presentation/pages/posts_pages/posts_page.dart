@@ -1,10 +1,12 @@
 import 'package:auction_clean_architecture/features/posts/presentation/pages/posts_pages/app_bar_screens/categories_screen.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/pages/posts_pages/app_bar_screens/search_screen.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/widget/post_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/strings/failures.dart';
+import '../../../../authentication/cubit/auth_methoed.dart';
 
 class PostsPage extends StatefulWidget {
   const PostsPage({
@@ -29,7 +31,7 @@ class _PostsPageState extends State<PostsPage> {
 
   @override
   void initState() {
-    // userId = AuthCubit.get(context).userData.uid;
+    userId = AuthCubit.get(context).userData.uid;
     Net();
   }
 
@@ -47,12 +49,12 @@ class _PostsPageState extends State<PostsPage> {
           actions: [
             IconButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const SearchPostScreen(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchPostScreen(),
+                  ),
+                );
               },
               icon: const Icon(Icons.search),
             ),

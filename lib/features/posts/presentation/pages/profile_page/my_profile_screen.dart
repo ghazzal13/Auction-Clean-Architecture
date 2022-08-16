@@ -1,5 +1,5 @@
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
+import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_count_down/timer_count_down.dart';
+
+import '../../../../auction_event/post_details_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -32,8 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocConsumer<PostsBloc, PostsState>(
         listener: (context, state) {},
         builder: (context, state) {
-          // var userModel = AuthCubit.get(context).userData;
-          UserModel userModel = UserModel();
+          var userModel = AuthCubit.get(context).userData;
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -154,34 +155,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget PostCard({context, required dynamic snap}) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => OnlineEventScreen(
-        //       duration: (snap['startdate'].toDate())!
-        //           .difference(DateTime.now())
-        //           .inSeconds,
-        //       post1: PostsEntity(
-        //         uid: snap['uid'].toString(),
-        //         name: snap['name'].toString(),
-        //         image: snap['image'].toString(),
-        //         price: snap['price'],
-        //         postImage: snap['postImage'].toString(),
-        //         postId: snap['postId'].toString(),
-        //         category: snap['category'].toString(),
-        //         startdate:
-        //             DateTime.parse(snap['startdate'].toDate().toString()),
-        //         enddate: DateTime.parse(snap['enddate'].toDate().toString()),
-        //         postTime: DateTime.parse(snap['postTime'].toDate().toString()),
-        //         titel: snap['titel'].toString(),
-        //         description: snap['description'].toString(),
-        //         winner: snap['winner'].toString(),
-        //         winnerID: snap['winnerID'].toString(),
-        //       ),
-        //       postId: snap['postId'].toString(),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OnlineEventScreen(
+              duration: (snap['startdate'].toDate())!
+                  .difference(DateTime.now())
+                  .inSeconds,
+              post1: PostsEntity(
+                uid: snap['uid'].toString(),
+                name: snap['name'].toString(),
+                image: snap['image'].toString(),
+                price: snap['price'],
+                postImage: snap['postImage'].toString(),
+                postId: snap['postId'].toString(),
+                category: snap['category'].toString(),
+                startdate:
+                    DateTime.parse(snap['startdate'].toDate().toString()),
+                enddate: DateTime.parse(snap['enddate'].toDate().toString()),
+                postTime: DateTime.parse(snap['postTime'].toDate().toString()),
+                titel: snap['titel'].toString(),
+                description: snap['description'].toString(),
+                winner: snap['winner'].toString(),
+                winnerID: snap['winnerID'].toString(),
+              ),
+              postId: snap['postId'].toString(),
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(

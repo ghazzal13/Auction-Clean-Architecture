@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auction_clean_architecture/core/strings/messages.dart';
+import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
 import 'package:date_format/date_format.dart';
@@ -84,9 +85,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var userModel = AuthCubit.get(context).userData;
-
-    UserModel userModel = UserModel();
+    var userModel = AuthCubit.get(context).userData;
 
     setState(() {
       titel.text = post.titel!;

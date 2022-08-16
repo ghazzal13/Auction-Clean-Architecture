@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../../../../authentication/cubit/auth_methoed.dart';
 import '../../../domain/entities/posts_entity.dart';
 import '../../widget/reuse_widget.dart';
 
@@ -77,8 +78,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var userModel = AuthCubit.get(context).userData;
-    UserModel userModel = UserModel();
+    var userModel = AuthCubit.get(context).userData;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(

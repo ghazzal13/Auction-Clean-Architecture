@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
+import '../../../auction_event/post_details_page.dart';
+import '../../domain/entities/posts_entity.dart';
+
 class Postcard extends StatelessWidget {
   final dynamic snap;
   final String userId;
@@ -13,34 +16,34 @@ class Postcard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => OnlineEventScreen(
-        //       duration: (snap['startdate'].toDate())!
-        //           .difference(DateTime.now())
-        //           .inSeconds,
-        //       post1: PostsEntity(
-        //         uid: snap['uid'].toString(),
-        //         name: snap['name'].toString(),
-        //         image: snap['image'].toString(),
-        //         price: snap['price'],
-        //         postImage: snap['postImage'].toString(),
-        //         postId: snap['postId'].toString(),
-        //         category: snap['category'].toString(),
-        //         startdate:
-        //             DateTime.parse(snap['startdate'].toDate().toString()),
-        //         enddate: DateTime.parse(snap['enddate'].toDate().toString()),
-        //         postTime: DateTime.parse(snap['postTime'].toDate().toString()),
-        //         titel: snap['titel'].toString(),
-        //         description: snap['description'].toString(),
-        //         winner: snap['winner'].toString(),
-        //         winnerID: snap['winnerID'].toString(),
-        //       ),
-        //       postId: snap['postId'].toString(),
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OnlineEventScreen(
+              duration: (snap['startdate'].toDate())!
+                  .difference(DateTime.now())
+                  .inSeconds,
+              post1: PostsEntity(
+                uid: snap['uid'].toString(),
+                name: snap['name'].toString(),
+                image: snap['image'].toString(),
+                price: snap['price'],
+                postImage: snap['postImage'].toString(),
+                postId: snap['postId'].toString(),
+                category: snap['category'].toString(),
+                startdate:
+                    DateTime.parse(snap['startdate'].toDate().toString()),
+                enddate: DateTime.parse(snap['enddate'].toDate().toString()),
+                postTime: DateTime.parse(snap['postTime'].toDate().toString()),
+                titel: snap['titel'].toString(),
+                description: snap['description'].toString(),
+                winner: snap['winner'].toString(),
+                winnerID: snap['winnerID'].toString(),
+              ),
+              postId: snap['postId'].toString(),
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(

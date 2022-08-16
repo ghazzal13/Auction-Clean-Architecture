@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'features/auction_event/cubit/cubit.dart';
 import 'features/posts/di/posts_injector.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
+import 'features/posts/presentation/blocs/posts_bloc.dart';
 import 'firebase_options.dart';
 import 'layout/border/bording_screen.dart';
 
@@ -47,10 +49,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          // BlocProvider(
-          //     create: (_) => di.sl<PostsBloc>()..add(GetAllPostsEvent())),
+          BlocProvider(
+              create: (_) => di.sl<PostsBloc>()..add(GetAllPostsEvent())),
           BlocProvider(create: (BuildContext context) => AuthCubit()),
-          // BlocProvider(create: (BuildContext context) => AuctionCubit()),
+          BlocProvider(create: (BuildContext context) => AuctionCubit()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

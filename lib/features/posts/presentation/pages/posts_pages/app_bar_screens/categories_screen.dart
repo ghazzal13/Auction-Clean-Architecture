@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../authentication/cubit/auth_methoed.dart';
 import '../../../widget/post_card_widget.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     select = false;
-    // userId = AuthCubit.get(context).userData.uid;
+    userId = AuthCubit.get(context).userData.uid;
   }
 
   late String category;
