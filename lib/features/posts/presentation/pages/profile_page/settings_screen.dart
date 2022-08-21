@@ -1,3 +1,4 @@
+import 'package:auction_clean_architecture/features/authentication/change_password_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,22 +36,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
-      body: Center(
-          child: TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) =>
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: const BoxDecoration(color: Colors.black),
+              child: TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) =>
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                            (route) => false));
+                  },
+                  child: const Text(
+                    'log out',
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: const BoxDecoration(color: Colors.black),
+              child: TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
-                        (route) => false));
-              },
-              child: const Text(
-                'log out',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ))),
+                            builder: (context) => const ChangePasswordScreen()),
+                        (route) => false);
+                  },
+                  child: const Text(
+                    'Change Password',
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

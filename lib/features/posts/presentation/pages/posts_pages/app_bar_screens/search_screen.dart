@@ -15,50 +15,102 @@ class SearchPostScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchPostScreen> {
   late final TextEditingController _searchController = TextEditingController();
   final TextEditingController _reportController = TextEditingController();
+  late bool isTap;
+  late double width;
+  @override
+  void initState() {
+    isTap = false;
+    width = 0.2;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: const Text(
-          'Search',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+        title: !isTap
+            ? const Text(
+                'Search',
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              )
+            : const SizedBox(),
+        actions: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width * width,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    AuctionCubit.get(context).getSearch(value);
+                  });
+                },
+                controller: _searchController,
+                keyboardType: TextInputType.text,
+                cursorColor: Colors.white,
+                onTap: (() => setState(() {
+                      isTap = true;
+                      width = 0.89;
+                    })),
+                decoration: InputDecoration(
+                  suffixIcon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.teal,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      AuctionCubit.get(context).getSearch(value);
-                    });
-                  },
-                  controller: _searchController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    suffixIcon: const Icon(Icons.search),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.teal,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Colors.teal,
-                      ),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: TextFormField(
+              //     onChanged: (value) {
+              //       setState(() {
+              //         AuctionCubit.get(context).getSearch(value);
+              //       });
+              //     },
+              //     controller: _searchController,
+              //     keyboardType: TextInputType.text,
+              //     decoration: InputDecoration(
+              //       suffixIcon: const Icon(Icons.search),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: const BorderSide(
+              //           color: Colors.teal,
+              //           width: 1,
+              //         ),
+              //         borderRadius: BorderRadius.circular(25),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: const BorderSide(
+              //           color: Colors.teal,
+              //         ),
+              //         borderRadius: BorderRadius.circular(25),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               AuctionCubit.get(context).search.isNotEmpty
                   ? ListView.builder(
                       itemBuilder: (context, index) => buildSearchCard(
@@ -70,26 +122,6 @@ class _SearchScreenState extends State<SearchPostScreen> {
                       itemCount: AuctionCubit.get(context).search.length,
                     )
                   : Container()
-              // ConditionalBuilder(
-              //   condition: state is! AuctionGetTicketLoadingState,
-              //   builder: (context) => SingleChildScrollView(
-              //     physics: const BouncingScrollPhysics(),
-              //     child: ListView.separated(
-              //       shrinkWrap: true,
-              //       physics: const NeverScrollableScrollPhysics(),
-              //       itemBuilder: (context, index) => buildSearchCard(
-              //         AuctionCubit.get(context).search[index],
-              //         context,
-              //         index,
-              //         userModel.uid,
-              //       ),
-              //       separatorBuilder: (context, index) => myDivider(),
-              //       itemCount: AuctionCubit.get(context).search.length,
-              //     ),
-              //   ),
-              //   fallback: (context) =>
-              //       const Center(child: CircularProgressIndicator()),
-              // ),
             ],
           ),
         ),
@@ -105,39 +137,7 @@ class _SearchScreenState extends State<SearchPostScreen> {
   ) =>
       postmodel.enddate!.isAfter(DateTime.now())
           ? GestureDetector(
-              onTap: () {
-                // AuctionCubit.get(context)
-                //     .getComments(postmodel.postId, 'posts');
-                // AuctionCubit.get(context).getprice(postmodel.postId, 'posts');
-                // AuctionCubit.get(context)
-                //     .getPostById(id: postmodel.postId.toString())
-                //     .then((value) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => OnlineEventScreen(
-                //         postmodel.postId.toString(),
-                //         doo = (postmodel.startAuction)!
-                //             .difference(DateTime.now())
-                //             .inSeconds,
-                //         duration: doo,
-                //         post1: {
-                //           'name': postmodel.name,
-                //           'uid': postmodel.uid,
-                //           'titel': postmodel.titel,
-                //           'postdate': postmodel.postTime,
-                //           'image': postmodel.image,
-                //           'postImage': postmodel.image,
-                //           'startAuction': postmodel.startAuction,
-                //           'price': postmodel.price,
-                //           'description': postmodel.description,
-                //           'category': postmodel.category,
-                //         },
-                //       ),
-                //     ),
-                //   );
-                // });
-              },
+              onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.only(
                   left: 5,
@@ -226,39 +226,7 @@ class _SearchScreenState extends State<SearchPostScreen> {
                                               ),
                                             );
                                           } else if (value.toString() ==
-                                              '/Edit') {
-                                            // AuctionCubit.get(context)
-                                            //     .getPostById(
-                                            //         id: postmodel.postId!)
-                                            //     .then((value) {
-                                            //   Navigator.push(
-                                            //       context,
-                                            //       MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             EditPostScreen(
-                                            //           postmodel.postId!,
-                                            //           post1: {
-                                            //             'name': postmodel.name!,
-                                            //             'image':
-                                            //                 postmodel.image!,
-                                            //             'postdate':
-                                            //                 postmodel.postTime,
-                                            //             'titel':
-                                            //                 postmodel.titel!,
-                                            //             'price':
-                                            //                 postmodel.price!,
-                                            //             'description': postmodel
-                                            //                 .description!,
-                                            //             'category':
-                                            //                 postmodel.category!,
-                                            //             'postImage': postmodel
-                                            //                 .postImage!,
-                                            //           },
-                                            //           postId: postmodel.postId!,
-                                            //         ),
-                                            //       ));
-                                            // });
-                                          }
+                                              '/Edit') {}
                                         },
                                         itemBuilder: (BuildContext bc) {
                                           return const [
@@ -326,43 +294,7 @@ class _SearchScreenState extends State<SearchPostScreen> {
                                                     child: const Text('Cancel'),
                                                   ),
                                                   TextButton(
-                                                    onPressed: () {
-                                                      // AuctionCubit.get(context)
-                                                      //     .reportPost(
-                                                      //       reportText:
-                                                      //           _reportController
-                                                      //               .text,
-                                                      //       postUsername:
-                                                      //           postmodel.name!,
-                                                      //       postUserimage:
-                                                      //           postmodel
-                                                      //               .image!,
-                                                      //       postImage: postmodel
-                                                      //           .postImage!,
-                                                      //       datePublished:
-                                                      //           postmodel
-                                                      //               .postTime,
-                                                      //       titel: postmodel
-                                                      //           .titel!,
-                                                      //       price: postmodel
-                                                      //           .price!,
-                                                      //       description: postmodel
-                                                      //           .description!,
-                                                      //       category: postmodel
-                                                      //           .category!,
-                                                      //       postUseruid:
-                                                      //           postmodel.uid!,
-                                                      //       startAuction:
-                                                      //           postmodel
-                                                      //               .startAuction,
-                                                      //       reportType:
-                                                      //           'online',
-                                                      //     )
-                                                      //     .then((value) =>
-                                                      //         Navigator.pop(
-                                                      //             context,
-                                                      //             'Send'));
-                                                    },
+                                                    onPressed: () {},
                                                     child: const Text('Send'),
                                                   ),
                                                 ],

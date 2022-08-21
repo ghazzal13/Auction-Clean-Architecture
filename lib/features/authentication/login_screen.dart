@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _address = TextEditingController();
   bool _isLoading = false;
   var isPassword = true;
+  var sss;
 
   @override
   void dispose() {
@@ -34,37 +35,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String messageEmail = '/';
   String messagePassword = '/';
-  Future loginUser({email, password}) async {
-    setState(() {
-      _isLoading = true;
-    });
+  Future<String> loginUser({email, password}) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .then((value) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const ManagementLayout()),
-            (route) => false);
-      });
-      print(credential);
+      );
+
+      return "done";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         messageEmail = 'No user found for that email.';
-        setState(() {
-          // print('No user found for that email.');
-        });
+
+        return "No user found for that email.";
       } else if (e.code == 'wrong-password') {
-        // print('Wrong password provided for that user.');
         setState(() {
           messagePassword = 'Wrong password provided for that user.';
         });
+        return "Wrong password provided for that user.";
+      } else {
+        return "Something is Wrong plase try later.";
       }
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
@@ -133,10 +124,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 FloatingActionButton.extended(
                   backgroundColor: primaryColor,
                   onPressed: () async {
+                    messageEmail = '/';
+
+                    messagePassword = '/';
                     if (formkey.currentState!.validate()) {
-                      await loginUser(
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      sss = await loginUser(
                           email: _email.text, password: _password.text);
+                      if (sss == "done") {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const ManagementLayout()),
+                            (route) => false);
+                      } else if (sss == "No user found for that email.") {
+                        setState(() {
+                          messageEmail = "No user found for that email.";
+                          formkey.currentState!.validate();
+                        });
+                      } else if (sss ==
+                          "Wrong password provided for that user.") {
+                        setState(() {
+                          messagePassword =
+                              "Wrong password provided for that user.";
+                          formkey.currentState!.validate();
+                        });
+                      } else {
+                        showSnackBar(
+                            context, 'Something is wrong plase try later');
+                      }
                     }
+                    setState(() {
+                      _isLoading = false;
+                    });
                   },
                   label: !_isLoading
                       ? Container(

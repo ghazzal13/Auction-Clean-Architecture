@@ -11,6 +11,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'features/posts/presentation/blocs/posts_bloc.dart';
 import 'firebase_options.dart';
 import 'layout/border/bording_screen.dart';
+import 'dart:async';
+
+import 'layout/start_page_animation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> getBorderCachedData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      onBording = prefs.getBool('onBordering')!;
+      onBording = prefs.getBool('onBordering') ?? false;
     });
   }
 
@@ -62,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {
-                  return const ManagementLayout();
+                  return const SecondPage(page: ManagementLayout());
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Text('${snapshot.error}'),
@@ -75,8 +78,8 @@ class _MyAppState extends State<MyApp> {
                 );
               }
               return !onBording
-                  ? const OnBorderingScreen()
-                  : const LoginScreen();
+                  ? const SecondPage(page: OnBorderingScreen())
+                  : const SecondPage(page: LoginScreen());
               // return const LoginScreen();
             },
           ),
