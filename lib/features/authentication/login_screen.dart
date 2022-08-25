@@ -116,7 +116,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   }).build(),
                   label: 'password',
                   textInputAction: TextInputAction.done,
-                  prefix: Icons.password,
+                  suffix: isPassword != true
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPassword = !isPassword;
+                            });
+                          },
+                          icon: const Icon(Icons.remove_red_eye_outlined))
+                      : IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPassword = !isPassword;
+                            });
+                          },
+                          icon: const Icon(Icons.remove_red_eye_rounded)),
                 ),
                 const SizedBox(
                   height: 40,

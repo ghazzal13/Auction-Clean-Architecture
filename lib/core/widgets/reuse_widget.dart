@@ -8,7 +8,7 @@ Widget reuseFormField({
   required String? Function(String?)? validate,
   required String label,
   IconData? prefix,
-  IconData? suffix,
+  Widget? suffix,
   Function? suffixPressed,
   bool isClickable = true,
   TextInputAction? textInputAction = TextInputAction.done,
@@ -37,16 +37,7 @@ Widget reuseFormField({
           prefixIcon: Icon(
             prefix,
           ),
-          suffixIcon: suffix != null
-              ? IconButton(
-                  onPressed: () {
-                    suffixPressed!();
-                  },
-                  icon: Icon(
-                    suffix,
-                  ),
-                )
-              : null,
+          suffixIcon: suffix ?? null,
         ),
         textInputAction: textInputAction);
 

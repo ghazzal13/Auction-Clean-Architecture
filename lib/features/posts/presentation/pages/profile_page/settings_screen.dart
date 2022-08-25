@@ -1,4 +1,4 @@
-import 'package:auction_clean_architecture/features/authentication/change_password_screen.dart';
+import 'package:auction_clean_architecture/features/authentication/cubit/change_password/change_password_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
