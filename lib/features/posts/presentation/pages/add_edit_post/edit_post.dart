@@ -98,11 +98,8 @@ class _EditPostScreenState extends State<EditPostScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.teal,
         title: const Text(
           '   Edit Post',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -117,15 +114,29 @@ class _EditPostScreenState extends State<EditPostScreen> {
                   height: 30.0,
                 ),
                 !close
-                    ? Container(
-                        width: 250,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage('${post.postImage}'),
+                    ? Stack(children: [
+                        Container(
+                          width: 250,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage('${post.postImage}'),
+                            ),
                           ),
                         ),
-                      )
+                        Positioned(
+                          top: 1,
+                          right: 1,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                close = true;
+                              });
+                            },
+                            icon: const Icon(Icons.close_rounded, size: 25),
+                          ),
+                        ),
+                      ])
                     : postImage != null
                         ? Stack(
                             children: [
@@ -304,6 +315,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
                     price.clear();
                     description.clear();
                     _isLoading = false;
+                    Navigator.pop(context);
                   });
                 });
               } else {

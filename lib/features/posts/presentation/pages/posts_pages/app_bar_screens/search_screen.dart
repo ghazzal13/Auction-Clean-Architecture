@@ -27,14 +27,9 @@ class _SearchScreenState extends State<SearchPostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
         title: !isTap
             ? const Text(
                 'Search',
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
               )
             : const SizedBox(),
         actions: [

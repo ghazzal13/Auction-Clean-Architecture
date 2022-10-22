@@ -146,7 +146,31 @@ class Postcard extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => EditPostScreen(
-                                      post: snap,
+                                      post: PostsEntity(
+                                        uid: snap['uid'].toString(),
+                                        name: snap['name'].toString(),
+                                        image: snap['image'].toString(),
+                                        price: snap['price'],
+                                        postImage: snap['postImage'].toString(),
+                                        postId: snap['postId'].toString(),
+                                        category: snap['category'].toString(),
+                                        startdate: DateTime.parse(
+                                            snap['startdate']
+                                                .toDate()
+                                                .toString()),
+                                        enddate: DateTime.parse(snap['enddate']
+                                            .toDate()
+                                            .toString()),
+                                        postTime: DateTime.parse(
+                                            snap['postTime']
+                                                .toDate()
+                                                .toString()),
+                                        titel: snap['titel'].toString(),
+                                        description:
+                                            snap['description'].toString(),
+                                        winner: snap['winner'].toString(),
+                                        winnerID: snap['winnerID'].toString(),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -231,11 +255,11 @@ class Postcard extends StatelessWidget {
                           (DateTime.now().isAfter(snap['startdate'].toDate()) &&
                                   DateTime.now()
                                       .isBefore(snap['enddate'].toDate()))
-                              ? CounterDownStarted(
+                              ? counterDownStarted(
                                   timeinSecond: (snap['enddate'].toDate())!
                                       .difference(DateTime.now())
                                       .inSeconds)
-                              : CounterDown(
+                              : counterDown(
                                   timeinSecond: (snap['startdate'].toDate())!
                                       .difference(DateTime.now())
                                       .inSeconds,
@@ -261,7 +285,7 @@ class Postcard extends StatelessWidget {
     );
   }
 
-  Widget CounterDownStarted({
+  Widget counterDownStarted({
     required int timeinSecond,
   }) =>
       Container(
@@ -280,7 +304,7 @@ class Postcard extends StatelessWidget {
         ),
       );
 
-  Widget CounterDown({
+  Widget counterDown({
     required int timeinSecond,
   }) =>
       Container(

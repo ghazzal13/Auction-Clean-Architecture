@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _address = TextEditingController();
   bool _isLoading = false;
-  var isPassword = true;
+  bool isPassword = true;
   var sss;
 
   @override
@@ -103,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 20,
                 ),
                 reuseFormField(
+                  isPassword: isPassword,
                   controller: _password,
                   type: TextInputType.text,
                   validate:
@@ -114,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   }).build(),
+                  prefix: Icons.password,
                   label: 'password',
                   textInputAction: TextInputAction.done,
                   suffix: isPassword != true

@@ -1,3 +1,4 @@
+import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/authentication/login_screen.dart';
 import 'package:auction_clean_architecture/layout/layout.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(),
+          theme: appTheme,
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
               // return const LoginScreen();
             },
           ),
-        ));
+        ),
+        );
   }
 }

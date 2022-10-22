@@ -76,7 +76,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         var userModel = AuthCubit.get(context).userData;
 
         return Scaffold(
-          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: primaryColor,
             title: const Text('Change Password'),

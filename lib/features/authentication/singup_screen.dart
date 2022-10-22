@@ -1,3 +1,4 @@
+import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/layout/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +22,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final bool _isLoading = false;
-  var isPassword = true;
+  bool isPassword = true;
 
   @override
   void dispose() {
@@ -114,6 +115,22 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 label: 'password',
                 prefix: Icons.password,
                 textInputAction: TextInputAction.next,
+                isPassword: isPassword,
+                suffix: isPassword != true
+                    ? IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                        icon: const Icon(Icons.remove_red_eye_outlined))
+                    : IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                        icon: const Icon(Icons.remove_red_eye_rounded)),
               ),
               Flexible(
                 flex: 2,
@@ -133,6 +150,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 child: Container(),
               ),
               FloatingActionButton.extended(
+                backgroundColor: primaryColor,
                 onPressed: () {
                   if (formkey.currentState!.validate()) {
                     signUpUser(email: _email.text, password: _password.text);
@@ -145,7 +163,10 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                          child: Text('Sign Up'),
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       )
                     : const CircularProgressIndicator(

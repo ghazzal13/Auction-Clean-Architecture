@@ -61,7 +61,9 @@ class PostRowHeder extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EditPostScreen(post: post)),
+                        builder: (context) => EditPostScreen(
+                              post: post,
+                            )),
                   );
                 },
                 icon: const Icon(

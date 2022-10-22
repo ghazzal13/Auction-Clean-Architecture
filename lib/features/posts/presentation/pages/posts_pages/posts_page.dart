@@ -38,87 +38,84 @@ class _PostsPageState extends State<PostsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.teal,
-          title: const Text(
-            '  Auctions',
-            style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          '  Auctions',
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPostScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.search),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
+          PopupMenuButton(
+            onSelected: (value) {
+              if (value.toString() == '/Category') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const SearchPostScreen(),
-                  ),
+                      builder: (context) => const CategoriesScreen()),
                 );
-              },
-              icon: const Icon(Icons.search),
-            ),
-            PopupMenuButton(
-              onSelected: (value) {
-                if (value.toString() == '/Category') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CategoriesScreen()),
+              }
+            },
+            itemBuilder: (BuildContext bc) {
+              return const [
+                PopupMenuItem(
+                  value: '/Category',
+                  child: Text("Category"),
+                ),
+              ];
+            },
+          ),
+        ],
+      ),
+      body: net
+          ? StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .where('enddate', isGreaterThan: DateTime.now())
+                  .orderBy('enddate', descending: false)
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 }
-              },
-              itemBuilder: (BuildContext bc) {
-                return const [
-                  PopupMenuItem(
-                    value: '/Category',
-                    child: Text("Category"),
-                  ),
-                ];
-              },
+                return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (ctx, index) => Container(
+                          child: Postcard(
+                            snap: snapshot.data!.docs[index].data(),
+                            userId: userId,
+                          ),
+                        ));
+              })
+          : Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.wifi_off,
+                      size: 50,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(OFFLINE_FAILURE_MESSAGE),
+                    SizedBox(
+                      height: 100,
+                    )
+                  ]),
             ),
-          ],
-        ),
-        body: net
-            ? StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('posts')
-                    .where('enddate', isGreaterThan: DateTime.now())
-                    .orderBy('enddate', descending: false)
-                    .snapshots(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (ctx, index) => Container(
-                            child: Postcard(
-                              snap: snapshot.data!.docs[index].data(),
-                              userId: userId,
-                            ),
-                          ));
-                })
-            : Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.wifi_off,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(OFFLINE_FAILURE_MESSAGE),
-                      SizedBox(
-                        height: 100,
-                      )
-                    ]),
-              ));
+    );
   }
 }
