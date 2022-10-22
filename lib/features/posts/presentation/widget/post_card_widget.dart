@@ -1,6 +1,4 @@
-import 'package:auction_clean_architecture/features/posts/presentation/pages/add_edit_post/edit_post.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 import '../../../auction_event/post_details_page.dart';
@@ -46,6 +44,139 @@ class Postcard extends StatelessWidget {
         );
       },
       child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.teal[50],
+            borderRadius: BorderRadius.circular(
+              10.0,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 150.0,
+                height: 150.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    10.0,
+                  ),
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      snap['postImage'].toString(),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: 150.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            'from ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            snap['name'].toString(),
+                            style: Theme.of(context).textTheme.bodyText1,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'titel ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            snap['titel'].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'category ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            snap['category'].toString(),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'description ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            snap['description'].toString(),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'starting Price',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          Text(
+                            ' ${snap['price'].toString()} \$',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            'remaining time ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          (DateTime.now().isAfter(snap['startdate'].toDate()) &&
+                                  DateTime.now()
+                                      .isBefore(snap['enddate'].toDate()))
+                              ? counterDownStarted(
+                                  timeinSecond: (snap['enddate'].toDate())!
+                                      .difference(DateTime.now())
+                                      .inSeconds)
+                              : counterDown(
+                                  timeinSecond: (snap['startdate'].toDate())!
+                                      .difference(DateTime.now())
+                                      .inSeconds,
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 15.0,
+              ),
+            ],
+          ),
+        ),
+      ),
+
+      /*
+       Padding(
         padding: const EdgeInsets.only(
           left: 5,
           right: 5,
@@ -282,6 +413,8 @@ class Postcard extends StatelessWidget {
           ),
         ),
       ),
+   
+   */
     );
   }
 
@@ -295,9 +428,7 @@ class Postcard extends StatelessWidget {
           build: (BuildContext context, double time) => Text(
             '${Duration(seconds: time.toInt()).inHours.remainder(24).toString()}:${Duration(seconds: time.toInt()).inMinutes.remainder(60).toString()}:${Duration(seconds: time.toInt()).inSeconds.remainder(60).toString().padLeft(2, '0')}',
             style: const TextStyle(
-              fontSize: 30,
-              color: Colors.red,
-            ),
+                fontSize: 15, color: Colors.red, fontWeight: FontWeight.bold),
           ),
           interval: const Duration(seconds: 1),
           onFinished: () {},
@@ -314,9 +445,9 @@ class Postcard extends StatelessWidget {
           build: (BuildContext context, double time) => Text(
             '${Duration(seconds: time.toInt()).inDays.remainder(365).toString()}:${Duration(seconds: time.toInt()).inHours.remainder(24).toString()}:${Duration(seconds: time.toInt()).inMinutes.remainder(60).toString()}:${Duration(seconds: time.toInt()).inSeconds.remainder(60).toString().padLeft(2, '0')}',
             style: TextStyle(
-              fontSize: 25,
-              color: Theme.of(context).primaryColor,
-            ),
+                fontSize: 18,
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold),
           ),
           interval: const Duration(seconds: 1),
           onFinished: () {},

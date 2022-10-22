@@ -2,6 +2,7 @@ import 'package:auction_clean_architecture/core/strings/failures.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/postcard_widget.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/shopping_cart_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
+                  builder: (context) => const ShoppingCartPage(),
                 ),
               );
             },
