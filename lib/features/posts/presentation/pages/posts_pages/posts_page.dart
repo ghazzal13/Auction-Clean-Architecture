@@ -6,6 +6,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/strings/failures.dart';
+import '../../../../auction_event/cubit/cubit.dart';
 import '../../../../authentication/cubit/auth_methoed.dart';
 
 class PostsPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _PostsPageState extends State<PostsPage> {
   @override
   void initState() {
     userId = AuthCubit.get(context).userData.uid;
+    AuctionCubit.get(context).getUserData();
     Net();
   }
 

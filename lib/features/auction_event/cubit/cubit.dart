@@ -203,6 +203,7 @@ class AuctionCubit extends Cubit<AuctionStates> {
     required String? comment,
   }) async {
     emit(AuctionWriteCommentLoadingState());
+    getUserData();
     String commentId = const Uuid().v1();
     CommentModel cmodel = CommentModel(
         name: userData.name,
@@ -212,6 +213,7 @@ class AuctionCubit extends Cubit<AuctionStates> {
         comment: comment,
         commentId: commentId,
         postId: postId);
+    print(cmodel);
     FirebaseFirestore.instance
         .collection(collection)
         .doc(postId)
