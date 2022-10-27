@@ -19,66 +19,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text(
           '  Settings',
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.settings),
-          ),
-        ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: const BoxDecoration(color: Colors.black),
-              child: TextButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut().then((value) =>
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()),
-                            (route) => false));
-                  },
-                  child: const Text(
-                    'log out',
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  )),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then(
+                      (value) => Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                          (route) => false),
+                    );
+              },
+              child: const Text(
+                'log out',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: const BoxDecoration(color: Colors.black),
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const ChangePasswordScreen()),
-                        (route) => false);
-                  },
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
-                  )),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const ChangePasswordScreen()),
+                  (route) => false,
+                );
+              },
+              child: const Text(
+                'Change Password',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

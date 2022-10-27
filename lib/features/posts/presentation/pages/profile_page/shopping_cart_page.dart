@@ -1,5 +1,5 @@
 import 'package:auction_clean_architecture/core/strings/failures.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/postcard_widget.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/widget/post_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +36,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text(
-          ' Shopping Cart',
+          'Shopping Cart',
         ),
       ),
       body: SingleChildScrollView(
@@ -70,10 +69,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             DocumentSnapshot snap =
                                 (snapshot.data! as dynamic).docs[index];
 
-                            return PostCard(
-                              context: context,
-                              snap: snap,
-                            );
+                            return Postcard(snap: snap);
                           },
                         ),
                       );

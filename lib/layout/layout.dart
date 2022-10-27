@@ -1,5 +1,5 @@
 import 'package:auction_clean_architecture/core/app_theme.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class _ManagementLayoutState extends State<ManagementLayout> {
   }
 
   void getData() {
-    AuthCubit.get(context).getUserData(currentUser!.uid);
+    AuctionCubit.get(context).getUserzData();
     // AuctionCubit.get(context).getUserData();
   }
 

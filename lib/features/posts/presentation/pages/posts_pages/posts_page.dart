@@ -33,7 +33,7 @@ class _PostsPageState extends State<PostsPage> {
   @override
   void initState() {
     userId = AuthCubit.get(context).userData.uid;
-    AuctionCubit.get(context).getUserData();
+    AuctionCubit.get(context).getUserzData();
     Net();
   }
 
@@ -97,7 +97,6 @@ class _PostsPageState extends State<PostsPage> {
                     itemBuilder: (ctx, index) => Container(
                           child: Postcard(
                             snap: snapshot.data!.docs[index].data(),
-                            userId: userId,
                           ),
                         ));
               })

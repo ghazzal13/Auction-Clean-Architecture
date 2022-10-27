@@ -97,7 +97,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     itemBuilder: (ctx, index) => Container(
                         child: Postcard(
                       snap: snapshot.data!.docs[index].data(),
-                      userId: userId,
                     )),
                   );
                 },

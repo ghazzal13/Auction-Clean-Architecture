@@ -19,7 +19,7 @@ class AuctionCubit extends Cubit<AuctionStates> {
 
   var currentUser = FirebaseAuth.instance.currentUser;
   UserModel userData = UserModel();
-  void getUserData() {
+  void getUserzData() {
     FirebaseFirestore.instance
         .collection("users")
         .doc(currentUser!.uid)
@@ -96,7 +96,7 @@ class AuctionCubit extends Cubit<AuctionStates> {
         .doc(userData.uid)
         .update(usermodel.toMap())
         .then((value) {
-      getUserData();
+      getUserzData();
     }).catchError((error) {
       emit(AuctionUserUpdateErrorState());
     });
@@ -203,7 +203,7 @@ class AuctionCubit extends Cubit<AuctionStates> {
     required String? comment,
   }) async {
     emit(AuctionWriteCommentLoadingState());
-    getUserData();
+
     String commentId = const Uuid().v1();
     CommentModel cmodel = CommentModel(
         name: userData.name,

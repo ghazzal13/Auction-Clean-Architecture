@@ -1,9 +1,6 @@
-import 'package:auction_clean_architecture/core/strings/failures.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/postcard_widget.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/shopping_cart_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 
@@ -25,10 +22,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  @override
   late var userModel;
   @override
   void initState() {
-    userModel = AuthCubit.get(context).userData;
+    userModel = AuctionCubit.get(context).userData;
     Net();
     super.initState();
   }
@@ -36,37 +34,111 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text(
-          '  Mazadat',
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text(
+            '  Mazadat',
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.settings),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ShoppingCartPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: false,
+              expandedHeight: 250.0,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional.topCenter,
+                          child: Container(
+                            height: 70.0,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(
+                                  4.0,
+                                ),
+                                topRight: Radius.circular(
+                                  4.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 64.0,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          child: CircleAvatar(
+                            radius: 60.0,
+                            backgroundImage: NetworkImage(
+                              '${userModel.image}',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    Text(
+                      '${userModel.name}',
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      '${userModel.email}',
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ],
                 ),
-              );
-            },
-            icon: const Icon(Icons.settings),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ShoppingCartPage(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.shopping_cart),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+              ),
+            ),
+            SliverFixedExtentList(
+              itemExtent: 50.0,
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    color: Colors.lightBlue[100 * (index % 9)],
+                    child: Text('List Item $index'),
+                  );
+                },
+              ),
+            ),
+          ],
+        )
+
+        /*
+       SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -149,8 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             DocumentSnapshot snap =
                                 (snapshot.data! as dynamic).docs[index];
 
-                            return PostCard(
-                              context: context,
+                            return Postcard(
                               snap: snap,
                             );
                           },
@@ -179,6 +250,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-    );
+  
+  */
+        );
   }
 }
