@@ -21,44 +21,70 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then(
-                      (value) => Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                          (route) => false),
+        child: Padding(
+          padding: const EdgeInsets.all(38.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.teal[200],
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then(
+                          (value) => Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                              (route) => false),
+                        );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      'log out',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.teal[200],
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const ChangePasswordScreen()),
+                      (route) => false,
                     );
-              },
-              child: const Text(
-                'log out',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      'Change Password',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const ChangePasswordScreen()),
-                  (route) => false,
-                );
-              },
-              child: const Text(
-                'Change Password',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

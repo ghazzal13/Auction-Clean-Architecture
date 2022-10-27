@@ -59,19 +59,15 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         );
                       }
 
-                      return SizedBox(
-                        height: (snapshot.data as dynamic).docs.length +
-                            1.0 * 400.0,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: (snapshot.data! as dynamic).docs.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot snap =
-                                (snapshot.data! as dynamic).docs[index];
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: (snapshot.data! as dynamic).docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot snap =
+                              (snapshot.data! as dynamic).docs[index];
 
-                            return Postcard(snap: snap);
-                          },
-                        ),
+                          return Postcard(snap: snap);
+                        },
                       );
                     })
                 : Center(
