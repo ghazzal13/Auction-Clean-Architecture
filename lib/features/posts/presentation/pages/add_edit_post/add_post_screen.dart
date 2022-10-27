@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/core/strings/messages.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
 import 'package:date_format/date_format.dart';
@@ -14,7 +15,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../../../../authentication/cubit/auth_methoed.dart';
 import '../../../domain/entities/posts_entity.dart';
 import '../../widget/reuse_widget.dart';
 
@@ -79,7 +79,7 @@ class _AddPostPageState extends State<AddPostPage> {
 
   @override
   Widget build(BuildContext context) {
-    var userModel = AuthCubit.get(context).userData;
+    var userModel = AuctionCubit.get(context).userData;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
