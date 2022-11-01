@@ -195,7 +195,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 const SizedBox(
                   height: 30.0,
                 ),
-                AddButton(userModel),
+                addButton(userModel),
                 const SizedBox(
                   height: 30.0,
                 ),
@@ -249,7 +249,7 @@ class _AddPostPageState extends State<AddPostPage> {
               ),
       );
 
-  Widget AddButton(UserModel userModel) => FloatingActionButton.extended(
+  Widget addButton(UserModel userModel) => FloatingActionButton.extended(
         backgroundColor: primaryColor,
         onPressed: () {
           setState(() {

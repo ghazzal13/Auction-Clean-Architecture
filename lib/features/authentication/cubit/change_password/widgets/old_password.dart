@@ -21,7 +21,6 @@ class _OldPassWordState extends State<OldPassWord> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     // passwordController.dispose();
     // passwordconferimController.dispose();
@@ -56,9 +55,9 @@ class _OldPassWordState extends State<OldPassWord> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: formKey,
-        child: SingleChildScrollView(
-            child: Column(
+      key: formKey,
+      child: SingleChildScrollView(
+        child: Column(
           children: [
             const SizedBox(
               height: 30.0,
@@ -126,6 +125,8 @@ class _OldPassWordState extends State<OldPassWord> {
               ),
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

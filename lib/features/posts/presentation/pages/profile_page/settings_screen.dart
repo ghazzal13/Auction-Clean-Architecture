@@ -65,10 +65,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => const ChangePasswordScreen()),
-                      (route) => false,
                     );
                   },
                   child: const Padding(

@@ -3,6 +3,7 @@ import 'package:auction_clean_architecture/features/authentication/cubit/auth_me
 import 'package:auction_clean_architecture/layout/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../../core/widgets/reuse_widget.dart';
@@ -69,6 +70,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Form(
         key: formkey,
         child: Padding(
@@ -76,7 +78,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
           child: Column(
             children: [
               Flexible(
-                flex: 3,
+                flex: 1,
+                child: Container(),
+              ),
+              const SizedBox(
+                  height: 100,
+                  child: Image(
+                    image: AssetImage('asset/image/mazadat_1.png'),
+                    fit: BoxFit.cover,
+                  )),
+              Flexible(
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -89,7 +101,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.next,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -103,7 +115,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.next,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -123,17 +135,23 @@ class _SingUpScreenState extends State<SingUpScreen> {
                             isPassword = !isPassword;
                           });
                         },
-                        icon: const Icon(Icons.remove_red_eye_outlined))
+                        icon: const Icon(
+                          Icons.remove_red_eye_outlined,
+                        ),
+                      )
                     : IconButton(
                         onPressed: () {
                           setState(() {
                             isPassword = !isPassword;
                           });
                         },
-                        icon: const Icon(Icons.remove_red_eye_rounded)),
+                        icon: const Icon(
+                          Icons.remove_red_eye_rounded,
+                        ),
+                      ),
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -146,7 +164,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.done,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               FloatingActionButton.extended(
@@ -174,7 +192,28 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       ),
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
+                child: Container(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SignInButton(
+                    Buttons.GoogleDark,
+                    onPressed: () {
+                      AuthCubit.get(context).signInWithGoogle().then(
+                            (value) => Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ManagementLayout()),
+                                (route) => false),
+                          );
+                    },
+                  ),
+                ],
+              ),
+              Flexible(
+                flex: 1,
                 child: Container(),
               ),
               Row(

@@ -43,7 +43,6 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
   late int newPrice;
   var duration;
 
-  @override
   final TextEditingController _cccController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   var formKey = GlobalKey<FormState>();

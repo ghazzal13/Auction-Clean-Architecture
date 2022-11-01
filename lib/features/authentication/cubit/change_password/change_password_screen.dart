@@ -78,7 +78,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: primaryColor,
-            title: const Text('Change Password'),
+            title: const Text(' Change Password'),
           ),
           body: SingleChildScrollView(
             child: Padding(

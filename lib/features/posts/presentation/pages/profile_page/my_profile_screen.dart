@@ -1,9 +1,10 @@
-import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/shopping_cart_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
+
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/shopping_cart_page.dart';
 
 import '../../../../../core/strings/failures.dart';
 import '../../widget/post_card_widget.dart';

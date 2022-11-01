@@ -28,10 +28,12 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_datetime_picker: ^1.5.1
+  flutter_signin_button: ^2.0.0
   fluttertoast: ^8.0.9
   form_validation: ^2.1.0+11
   form_validator: ^1.0.2
   get_it: ^7.2.0
+  google_sign_in: ^5.4.2
   http: ^0.13.5
   image_picker: ^0.8.5+3
   intl: ^0.17.0

@@ -116,7 +116,7 @@ Widget PostCard({context, required dynamic snap}) {
                                         .isAfter(snap['startdate'].toDate()) &&
                                     DateTime.now()
                                         .isBefore(snap['enddate'].toDate()))
-                                ? CounterDownStarted(
+                                ? counterDownStarted(
                                     timeinSecond: (snap['enddate'].toDate())!
                                         .difference(DateTime.now())
                                         .inSeconds)
@@ -124,7 +124,7 @@ Widget PostCard({context, required dynamic snap}) {
                                             snap['startdate'].toDate()) &&
                                         DateTime.now()
                                             .isBefore(snap['enddate'].toDate()))
-                                    ? CounterDown(
+                                    ? counterDown(
                                         timeinSecond:
                                             (snap['startdate'].toDate())!
                                                 .difference(DateTime.now())
@@ -163,7 +163,7 @@ Widget PostCard({context, required dynamic snap}) {
   );
 }
 
-Widget CounterDownStarted({
+Widget counterDownStarted({
   required int timeinSecond,
 }) =>
     Container(
@@ -182,7 +182,7 @@ Widget CounterDownStarted({
       ),
     );
 
-Widget CounterDown({
+Widget counterDown({
   required int timeinSecond,
 }) =>
     Container(
