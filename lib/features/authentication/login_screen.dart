@@ -2,6 +2,7 @@ import 'package:auction_clean_architecture/features/authentication/singup_screen
 import 'package:auction_clean_architecture/layout/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../../core/app_theme.dart';
@@ -21,7 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _address = TextEditingController();
   bool _isLoading = false;
-  var isPassword = true;
+  bool isPassword = true;
+  var sss;
 
   @override
   void dispose() {
@@ -34,44 +36,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String messageEmail = '/';
   String messagePassword = '/';
-  Future loginUser({email, password}) async {
-    setState(() {
-      _isLoading = true;
-    });
+  Future<String> loginUser({email, password}) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .then((value) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const ManagementLayout()),
-            (route) => false);
-      });
-      print(credential);
+      );
+
+      return "done";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         messageEmail = 'No user found for that email.';
-        setState(() {
-          // print('No user found for that email.');
-        });
+
+        return "No user found for that email.";
       } else if (e.code == 'wrong-password') {
-        // print('Wrong password provided for that user.');
         setState(() {
           messagePassword = 'Wrong password provided for that user.';
         });
+        return "Wrong password provided for that user.";
+      } else {
+        return "Something is Wrong plase try later.";
       }
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
-  var hight = 300;
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Form(
         key: formkey,
@@ -80,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(
-                  height: 50,
+                SizedBox(
+                  height: size.width * .04,
                 ),
                 const SizedBox(
                     height: 300,
@@ -89,8 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       image: AssetImage('asset/image/mazadat_1.png'),
                       fit: BoxFit.cover,
                     )),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.width * .04,
                 ),
                 reuseFormField(
                   controller: _email,
@@ -108,10 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefix: Icons.email,
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: size.width * .04,
                 ),
                 reuseFormField(
+                  isPassword: isPassword,
                   controller: _password,
                   type: TextInputType.text,
                   validate:
@@ -123,76 +115,139 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   }).build(),
+                  prefix: Icons.password,
                   label: 'password',
                   textInputAction: TextInputAction.done,
-                  prefix: Icons.password,
+                  suffix: isPassword != true
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPassword = !isPassword;
+                            });
+                          },
+                          icon: const Icon(Icons.remove_red_eye_outlined))
+                      : IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isPassword = !isPassword;
+                            });
+                          },
+                          icon: const Icon(Icons.remove_red_eye_rounded)),
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: size.width * .04,
                 ),
-                FloatingActionButton.extended(
-                  backgroundColor: primaryColor,
-                  onPressed: () async {
-                    if (formkey.currentState!.validate()) {
-                      await loginUser(
-                          email: _email.text, password: _password.text);
-                    }
-                  },
-                  label: !_isLoading
-                      ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(fontSize: 25),
+                SizedBox(
+                  height: size.width * .8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Login(),
+                      SizedBox(
+                        height: size.width * .04,
+                      ),
+                      SignInButton(
+                        text: "Login with Google",
+                        Buttons.Google,
+                        onPressed: () {},
+                      ),
+                      SignInButton(
+                        text: "Login with Facebook",
+                        Buttons.Facebook,
+                        onPressed: () {},
+                      ),
+                      SizedBox(
+                        height: size.width * .1,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: const Text(
+                              'Dont have an account?',
                             ),
                           ),
-                        )
-                      : const CircularProgressIndicator(
-                          color: (Colors.white),
-                        ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: const Text(
-                        'Dont have an account?',
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const SingUpScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text(
-                          ' Signup.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                          GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SingUpScreen(),
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: const Text(
+                                ' Signup.',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 20,
-                )
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget Login() {
+    return FloatingActionButton.extended(
+      backgroundColor: primaryColor,
+      onPressed: () async {
+        messageEmail = '/';
+
+        messagePassword = '/';
+        if (formkey.currentState!.validate()) {
+          setState(() {
+            _isLoading = true;
+          });
+          sss = await loginUser(email: _email.text, password: _password.text);
+          if (sss == "done") {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => const ManagementLayout()),
+                (route) => false);
+          } else if (sss == "No user found for that email.") {
+            setState(() {
+              messageEmail = "No user found for that email.";
+              formkey.currentState!.validate();
+            });
+          } else if (sss == "Wrong password provided for that user.") {
+            setState(() {
+              messagePassword = "Wrong password provided for that user.";
+              formkey.currentState!.validate();
+            });
+          } else {
+            showSnackBar(context, 'Something is wrong plase try later');
+          }
+        }
+        setState(() {
+          _isLoading = false;
+        });
+      },
+      label: !_isLoading
+          ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontSize: 25),
+                ),
+              ),
+            )
+          : const CircularProgressIndicator(
+              color: (Colors.white),
+            ),
     );
   }
 }

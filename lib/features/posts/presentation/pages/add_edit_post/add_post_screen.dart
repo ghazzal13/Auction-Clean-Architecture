@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/core/strings/messages.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
 import 'package:date_format/date_format.dart';
@@ -77,17 +79,12 @@ class _AddPostPageState extends State<AddPostPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var userModel = AuthCubit.get(context).userData;
-    UserModel userModel = UserModel();
+    var userModel = AuctionCubit.get(context).userData;
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.teal,
         title: const Text(
           '  Add Post',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -198,7 +195,7 @@ class _AddPostPageState extends State<AddPostPage> {
                 const SizedBox(
                   height: 30.0,
                 ),
-                AddButton(userModel),
+                addButton(userModel),
                 const SizedBox(
                   height: 30.0,
                 ),
@@ -230,13 +227,30 @@ class _AddPostPageState extends State<AddPostPage> {
         child: mazadTime != DateTime(1, 1, 1, 1)
             ? Text(' ${DateFormat.yMd().add_jm().format(mazadTime)}',
                 style: const TextStyle(color: Colors.blue))
-            : const Text(
-                'select date',
-                style: TextStyle(color: Colors.blue),
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'select date',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.date_range,
+                    color: primaryColor,
+                    size: 15,
+                  )
+                ],
               ),
       );
 
-  Widget AddButton(UserModel userModel) => FloatingActionButton.extended(
+  Widget addButton(UserModel userModel) => FloatingActionButton.extended(
+        backgroundColor: primaryColor,
         onPressed: () {
           setState(() {
             _isLoading = true;
@@ -295,19 +309,14 @@ class _AddPostPageState extends State<AddPostPage> {
           }
         },
         label: !_isLoading
-            ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                    child: Text(
-                      'Add',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
+            ? const Padding(
+                padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
+                child: Text(
+                  'Add',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               )

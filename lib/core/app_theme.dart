@@ -6,7 +6,12 @@ const secondaryColor = Color.fromARGB(255, 6, 101, 92);
 final appTheme = ThemeData(
     appBarTheme: const AppBarTheme(
       backgroundColor: primaryColor,
-      centerTitle: true,
+      centerTitle: false,
+      titleTextStyle: TextStyle(
+        fontSize: 25,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     brightness: Brightness.light,
     primaryColor: primaryColor,
@@ -17,7 +22,6 @@ final appTheme = ThemeData(
         const ProgressIndicatorThemeData(color: primaryColor),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
-      foregroundColor: secondaryColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
         floatingLabelStyle: const TextStyle(color: primaryColor),

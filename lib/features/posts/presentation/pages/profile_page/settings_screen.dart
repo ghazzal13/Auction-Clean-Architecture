@@ -1,3 +1,4 @@
+import 'package:auction_clean_architecture/features/authentication/cubit/change_password/change_password_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,42 +16,76 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
         title: const Text(
           '  Settings',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.settings),
-          ),
-        ],
       ),
       body: Center(
-          child: TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
-                        (route) => false));
-              },
-              child: const Text(
-                'log out',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ))),
+        child: Padding(
+          padding: const EdgeInsets.all(38.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.teal[200],
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then(
+                          (value) => Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                              (route) => false),
+                        );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      'log out',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.teal[200],
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const ChangePasswordScreen()),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Text(
+                      'Change Password',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

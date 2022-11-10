@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auction_clean_architecture/core/strings/messages.dart';
+import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
 import 'package:date_format/date_format.dart';
@@ -84,9 +85,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var userModel = AuthCubit.get(context).userData;
-
-    UserModel userModel = UserModel();
+    var userModel = AuthCubit.get(context).userData;
 
     setState(() {
       titel.text = post.titel!;
@@ -99,11 +98,8 @@ class _EditPostScreenState extends State<EditPostScreen> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.teal,
         title: const Text(
           '   Edit Post',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -118,15 +114,29 @@ class _EditPostScreenState extends State<EditPostScreen> {
                   height: 30.0,
                 ),
                 !close
-                    ? Container(
-                        width: 250,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage('${post.postImage}'),
+                    ? Stack(children: [
+                        Container(
+                          width: 250,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage('${post.postImage}'),
+                            ),
                           ),
                         ),
-                      )
+                        Positioned(
+                          top: 1,
+                          right: 1,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                close = true;
+                              });
+                            },
+                            icon: const Icon(Icons.close_rounded, size: 25),
+                          ),
+                        ),
+                      ])
                     : postImage != null
                         ? Stack(
                             children: [
@@ -305,6 +315,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
                     price.clear();
                     description.clear();
                     _isLoading = false;
+                    Navigator.pop(context);
                   });
                 });
               } else {

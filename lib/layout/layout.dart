@@ -1,7 +1,7 @@
-import 'package:auction_clean_architecture/core/app_theme.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../features/posts/presentation/pages/add_edit_post/add_post_screen.dart';
 import '../features/posts/presentation/pages/posts_pages/posts_page.dart';
@@ -15,7 +15,7 @@ class ManagementLayout extends StatefulWidget {
 }
 
 class _ManagementLayoutState extends State<ManagementLayout> {
-  int selectedIndex = 0;
+  int currentIndex = 0;
   var currentUser;
   static const List<Widget> _widgetOptions = <Widget>[
     PostsPage(),
@@ -25,12 +25,12 @@ class _ManagementLayoutState extends State<ManagementLayout> {
 
   void onselect(int x) {
     setState(() {
-      selectedIndex = x;
+      currentIndex = x;
     });
   }
 
   void getData() {
-    AuthCubit.get(context).getUserData(currentUser!.uid);
+    AuctionCubit.get(context).getUserzData();
     // AuctionCubit.get(context).getUserData();
   }
 
@@ -44,8 +44,10 @@ class _ManagementLayoutState extends State<ManagementLayout> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: _widgetOptions.elementAt(selectedIndex),
+      body: _widgetOptions.elementAt(currentIndex),
+/*
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -68,6 +70,73 @@ class _ManagementLayoutState extends State<ManagementLayout> {
         backgroundColor: primaryColor,
         unselectedItemColor: Colors.white,
       ),
+  */
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        height: screenWidth * .155,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.15),
+              blurRadius: 30,
+              offset: const Offset(0, 10),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: ListView.builder(
+          itemCount: 3,
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * .024),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              setState(() {
+                currentIndex = index;
+                HapticFeedback.lightImpact();
+              });
+            },
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: Stack(
+              children: [
+                SizedBox(
+                  width: screenWidth * .2993,
+                  child: Center(
+                    child: AnimatedContainer(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.fastLinearToSlowEaseIn,
+                      height: index == currentIndex ? screenWidth * .12 : 0,
+                      width: index == currentIndex ? screenWidth * .2800 : 0,
+                      decoration: BoxDecoration(
+                        color: index == currentIndex
+                            ? Colors.teal[100]
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * .2993,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    listOfIcons[index],
+                    size: screenWidth * .076,
+                    color: index == currentIndex ? Colors.teal : Colors.black26,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
+
+  List<IconData> listOfIcons = [
+    Icons.home_rounded,
+    Icons.add_photo_alternate_outlined,
+    Icons.person_rounded,
+  ];
 }

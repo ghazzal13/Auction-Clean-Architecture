@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../authentication/cubit/auth_methoed.dart';
 import '../../../widget/post_card_widget.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     select = false;
-    // userId = AuthCubit.get(context).userData.uid;
+    userId = AuthCubit.get(context).userData.uid;
   }
 
   late String category;
@@ -27,11 +28,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
         title: const Text(
           'Categories',
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
@@ -99,7 +97,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     itemBuilder: (ctx, index) => Container(
                         child: Postcard(
                       snap: snapshot.data!.docs[index].data(),
-                      userId: userId,
                     )),
                   );
                 },

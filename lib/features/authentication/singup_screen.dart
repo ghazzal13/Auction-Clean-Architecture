@@ -1,7 +1,9 @@
+import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/layout/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../../core/widgets/reuse_widget.dart';
@@ -21,7 +23,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final bool _isLoading = false;
-  var isPassword = true;
+  bool isPassword = true;
 
   @override
   void dispose() {
@@ -68,6 +70,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Form(
         key: formkey,
         child: Padding(
@@ -75,7 +78,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
           child: Column(
             children: [
               Flexible(
-                flex: 3,
+                flex: 1,
+                child: Container(),
+              ),
+              const SizedBox(
+                  height: 100,
+                  child: Image(
+                    image: AssetImage('asset/image/mazadat_1.png'),
+                    fit: BoxFit.cover,
+                  )),
+              Flexible(
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -88,7 +101,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.next,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -102,7 +115,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.next,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -114,9 +127,31 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 label: 'password',
                 prefix: Icons.password,
                 textInputAction: TextInputAction.next,
+                isPassword: isPassword,
+                suffix: isPassword != true
+                    ? IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.remove_red_eye_outlined,
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.remove_red_eye_rounded,
+                        ),
+                      ),
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               reuseFormField(
@@ -129,10 +164,11 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 textInputAction: TextInputAction.done,
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
                 child: Container(),
               ),
               FloatingActionButton.extended(
+                backgroundColor: primaryColor,
                 onPressed: () {
                   if (formkey.currentState!.validate()) {
                     signUpUser(email: _email.text, password: _password.text);
@@ -145,7 +181,10 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                          child: Text('Sign Up'),
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(fontSize: 25),
+                          ),
                         ),
                       )
                     : const CircularProgressIndicator(
@@ -153,7 +192,28 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       ),
               ),
               Flexible(
-                flex: 2,
+                flex: 1,
+                child: Container(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SignInButton(
+                    Buttons.GoogleDark,
+                    onPressed: () {
+                      AuthCubit.get(context).signInWithGoogle().then(
+                            (value) => Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ManagementLayout()),
+                                (route) => false),
+                          );
+                    },
+                  ),
+                ],
+              ),
+              Flexible(
+                flex: 1,
                 child: Container(),
               ),
               Row(

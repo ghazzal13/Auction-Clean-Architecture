@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -8,12 +11,13 @@ Widget reuseFormField({
   required String? Function(String?)? validate,
   required String label,
   IconData? prefix,
-  IconData? suffix,
+  Widget? suffix,
   Function? suffixPressed,
   bool isClickable = true,
   TextInputAction? textInputAction = TextInputAction.done,
 }) =>
     TextFormField(
+        cursorColor: primaryColor,
         controller: controller,
         keyboardType: type,
         obscureText: isPassword,
@@ -22,31 +26,22 @@ Widget reuseFormField({
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: Colors.teal,
+              color: primaryColor,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(25),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.teal,
-            ),
+            borderSide: const BorderSide(color: primaryColor),
             borderRadius: BorderRadius.circular(25),
           ),
           labelText: label,
+          labelStyle: const TextStyle(color: primaryColor),
           prefixIcon: Icon(
             prefix,
+            color: primaryColor,
           ),
-          suffixIcon: suffix != null
-              ? IconButton(
-                  onPressed: () {
-                    suffixPressed!();
-                  },
-                  icon: Icon(
-                    suffix,
-                  ),
-                )
-              : null,
+          suffixIcon: suffix,
         ),
         textInputAction: textInputAction);
 
