@@ -52,39 +52,44 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-              create: (_) => di.sl<PostsBloc>()..add(GetAllPostsEvent())),
-          BlocProvider(create: (BuildContext context) => AuthCubit()),
-          BlocProvider(create: (BuildContext context) => AuctionCubit()),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: appTheme,
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const SecondPage(page: ManagementLayout());
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                }
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+      providers: [
+        BlocProvider(
+            create: (_) => di.sl<PostsBloc>()..add(GetAllPostsEvent())),
+        BlocProvider(create: (BuildContext context) => AuthCubit()),
+        BlocProvider(create: (BuildContext context) => AuctionCubit()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: appTheme,
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const SecondPage(page: ManagementLayout());
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
                 );
               }
-              return !onBording
-                  ? const SecondPage(page: OnBorderingScreen())
-                  : const SecondPage(page: LoginScreen());
-              // return const LoginScreen();
-            },
-          ),
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return !onBording
+                ? const SecondPage(page: OnBorderingScreen())
+                : const SecondPage(page: LoginScreen());
+            // return const LoginScreen();
+          },
         ),
-        );
+      ),
+    );
   }
 }
+
+
+//npm install -g npm@8.19.2
+
+//https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline
