@@ -154,47 +154,6 @@ class AuctionCubit extends Cubit<AuctionStates> {
   void deletDoc(String colection, String postId) {
     FirebaseFirestore.instance.collection(colection).doc(postId).delete();
   }
-//
-/*
-
-4
-4
-4
-4
-4
-4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-// Future followPost(String postId, String uid) async {
-//     getPostById(id: postId);
-//     if (postByID.followers!.contains(uid)) {
-//     } else {
-//       FirebaseFirestore.instance.collection('posts').doc(postId).update({
-//         'followers': FieldValue.arrayUnion([uid])
-//       });
-//     }
-//   }
 
   Future writeComment(
     String collection,

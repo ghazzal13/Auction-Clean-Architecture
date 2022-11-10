@@ -1,13 +1,16 @@
+import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/pay_page.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/widget/offline_widget.dart';
+import 'package:auction_clean_architecture/reuse/reuse_navigator_method.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/settings_screen.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/profile_page/shopping_cart_page.dart';
 
 import '../../../../../core/strings/failures.dart';
 import '../../widget/post_card_widget.dart';
+import '../../widget/profile_header.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -54,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SettingsScreen(),
+                  builder: (context) => const PaymentPage(),
                 ),
               );
             },
@@ -62,154 +65,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ShoppingCartPage(),
-                ),
-              );
+              navigateTo(context, const ShoppingCartPage());
             },
             icon: const Icon(Icons.shopping_cart),
           ),
         ],
       ),
-      body:
-          // CustomScrollView(
-          //   slivers: <Widget>[
-          //     SliverAppBar(
-          //       pinned: false,
-          //       expandedHeight: 250.0,
-          //       flexibleSpace: Padding(
-          //         padding: const EdgeInsets.all(18.0),
-          //         child: Column(
-          //           children: [
-          //             Stack(
-          //               alignment: AlignmentDirectional.bottomCenter,
-          //               children: [
-          //                 Align(
-          //                   alignment: AlignmentDirectional.topCenter,
-          //                   child: Container(
-          //                     height: 70.0,
-          //                     width: double.infinity,
-          //                     decoration: const BoxDecoration(
-          //                       borderRadius: BorderRadius.only(
-          //                         topLeft: Radius.circular(
-          //                           4.0,
-          //                         ),
-          //                         topRight: Radius.circular(
-          //                           4.0,
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 CircleAvatar(
-          //                   radius: 64.0,
-          //                   backgroundColor:
-          //                       Theme.of(context).scaffoldBackgroundColor,
-          //                   child: CircleAvatar(
-          //                     radius: 60.0,
-          //                     backgroundImage: NetworkImage(
-          //                       '${userModel.image}',
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(
-          //               height: 5.0,
-          //             ),
-          //             Text(
-          //               '${userModel.name}',
-          //               style: const TextStyle(
-          //                   fontSize: 30, fontWeight: FontWeight.bold),
-          //             ),
-          //             Text(
-          //               '${userModel.email}',
-          //               style: Theme.of(context).textTheme.caption,
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //     SliverFixedExtentList(
-          //       itemExtent: 50.0,
-          //       delegate: SliverChildBuilderDelegate(
-          //         (BuildContext context, int index) {
-          //           return Container(
-          //             alignment: Alignment.center,
-          //             color: Colors.lightBlue[100 * (index % 9)],
-          //             child: Text('List Item $index'),
-          //           );
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // )
-
-          Column(
+      body: Column(
         children: [
-          Container(
-            decoration: const BoxDecoration(color: Colors.white),
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional.topCenter,
-                        child: Container(
-                          height: 70.0,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(
-                                4.0,
-                              ),
-                              topRight: Radius.circular(
-                                4.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 64.0,
-                        backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
-                        child: CircleAvatar(
-                          radius: 60.0,
-                          backgroundImage: NetworkImage(
-                            '${userModel.image}',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    '${userModel.name}',
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${userModel.email}',
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ],
-              ),
-            ),
+          profileHeader(
+            context,
+            image: '${userModel.image}',
+            name: '${userModel.name}',
+            email: '${userModel.email}',
           ),
           const Divider(),
           SingleChildScrollView(
-            child: net
-                ? SizedBox(
-                    height: h - 234 - 155,
-                    child: FutureBuilder(
+              child: net
+                  ? SizedBox(
+                      height: h - 234 - 155,
+                      child: FutureBuilder(
                         future: FirebaseFirestore.instance
                             .collection('posts')
                             .where('uid', isEqualTo: userModel.uid)
@@ -236,26 +111,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             },
                           );
-                        }),
-                  )
-                : Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.wifi_off,
-                            size: 50,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(OFFLINE_FAILURE_MESSAGE),
-                          SizedBox(
-                            height: 100,
-                          )
-                        ]),
-                  ),
-          ),
+                        },
+                      ),
+                    )
+                  : offlineWidget()),
         ],
       ),
     );
