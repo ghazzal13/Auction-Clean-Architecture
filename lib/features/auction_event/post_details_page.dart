@@ -5,12 +5,14 @@ import 'package:auction_clean_architecture/features/auction_event/post/post_dody
 import 'package:auction_clean_architecture/features/auction_event/post/post_row_heder.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
+import 'package:auction_clean_architecture/features/posts/presentation/pages/add_edit_post/edit_post.dart';
+import 'package:auction_clean_architecture/reuse/reuse_navigator_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_count_down/timer_count_down.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
 import '../../core/app_theme.dart';
 import 'cubit/cubit.dart';
 import 'models/comment_model.dart';
@@ -54,17 +56,18 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
     required this.duration,
     required this.post1,
   });
-
+  late var _expandedComment;
+  late var _expandedPrices;
   @override
   void initState() {
-    super.initState();
+    _expandedComment = (duration > 0) ? true : false;
+    _expandedPrices = (duration < 0) ? true : false;
+
     AuctionCubit.get(context).getPostById(id: postId);
     AuctionCubit.get(context).getComments(postId, 'posts');
     AuctionCubit.get(context).getprice(postId, 'posts');
+    super.initState();
   }
-
-  var _expandedComment = false;
-  var _expandedPrices = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +76,19 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
         builder: (context, state) {
           var userModel = AuthCubit.get(context).userData;
           var postmmm = AuctionCubit.get(context).postByID;
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: primaryColor,
               // title: Text('${postmmm.titel}'),
               title: Text('${post1.titel}'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      navigateAndremove(context, EditPostScreen(post: post1));
+                    },
+                    icon: const Icon(Icons.mode_edit_outlined))
+              ],
             ),
             body: Container(
                 child: Form(
@@ -103,7 +114,7 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
                           post: post1,
                           userId: '${userModel.uid}',
                           date:
-                              '${DateFormat.yMd().add_jm().format(post1.postTime!)} ',
+                              '${DateFormat.yMd().add_jm().format(post1.postTime)} ',
                           image: '${post1.image}',
                           name: '${post1.name}',
                         ),
@@ -472,15 +483,29 @@ Widget buildCommentItem(CommentModel commentModel, index) => Padding(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        '${commentModel.name}',
+                        style: TextStyle(
+                          color: Colors.teal[600],
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        ', ${timeago.format(commentModel.dateTime as DateTime)}',
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
                   Text(
-                    '${commentModel.name}',
-                    style: TextStyle(
-                      color: Colors.teal[600],
-                      fontSize: 17,
+                    '  ${commentModel.comment}',
+                    style: const TextStyle(
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
-                  ),
-                  Text('${commentModel.comment}')
+                  )
                 ],
               ),
             ),
@@ -512,13 +537,21 @@ Widget buildPricesItem(EventModel eventModel) => Padding(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${eventModel.name}',
-                    style: TextStyle(
-                      color: Colors.teal[600],
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '${eventModel.name}',
+                        style: TextStyle(
+                          color: Colors.teal[600],
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        ', ${timeago.format(eventModel.dateTime as DateTime)}',
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                    ],
                   ),
                   Text('${eventModel.price}')
                 ],
