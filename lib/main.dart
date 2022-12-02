@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/authentication/login_screen.dart';
@@ -11,10 +12,9 @@ import 'features/posts/di/posts_injector.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
 import 'features/posts/presentation/blocs/posts_bloc.dart';
 import 'firebase_options.dart';
+import 'package:page_transition/page_transition.dart';
 import 'layout/border/bording_screen.dart';
 import 'dart:async';
-
-import 'layout/start_page_animation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,32 +59,55 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (BuildContext context) => AuctionCubit()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const SecondPage(page: ManagementLayout());
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
-                );
-              }
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return !onBording
-                ? const SecondPage(page: OnBorderingScreen())
-                : const SecondPage(page: LoginScreen());
-            // return const LoginScreen();
-          },
-        ),
-      ),
+          debugShowCheckedModeBanner: false,
+          theme: appTheme,
+          home: AnimatedSplashScreen(
+              duration: 3000,
+              splash: Container(
+                width: 200.0,
+                height: 200.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    10.0,
+                  ),
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      'asset/image/mazadat_1.png',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              splashIconSize: 200,
+              nextScreen: StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    if (snapshot.hasData) {
+                      // return const SecondPage(page: ManagementLayout());
+                      return const ManagementLayout();
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('${snapshot.error}'),
+                      );
+                    }
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return !onBording
+                      // ? const  SecondPage(page: OnBorderingScreen())
+                      ? const OnBorderingScreen()
+                      // : const SecondPage(page: LoginScreen());
+                      : const LoginScreen();
+                  // return const LoginScreen();
+                },
+              ),
+              splashTransition: SplashTransition.fadeTransition,
+              pageTransitionType: PageTransitionType.theme,
+              backgroundColor: const Color.fromARGB(255, 6, 101, 92))),
     );
   }
 }
@@ -93,3 +116,5 @@ class _MyAppState extends State<MyApp> {
 //npm install -g npm@8.19.2
 
 //https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline
+ 
+   

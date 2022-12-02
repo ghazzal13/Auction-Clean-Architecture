@@ -2,9 +2,11 @@ import 'package:auction_clean_architecture/features/authentication/cubit/states.
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
@@ -15,12 +17,13 @@ class AuthCubit extends Cubit<AuthStates> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future createUser({
+    String? image,
     required String name,
     required String email,
     required String address,
   }) async {
     Map<String, dynamic> user = {
-      'image': 'https://i.stack.imgur.com/l60Hf.png',
+      'image': image ?? 'https://i.stack.imgur.com/l60Hf.png',
       'uid': _auth.currentUser!.uid,
       'name': name,
       'email': email,
@@ -79,10 +82,45 @@ class AuthCubit extends Cubit<AuthStates> {
 
     if (userCredential.additionalUserInfo?.isNewUser == true) {
       createUser(
+          image: userCredential.additionalUserInfo?.profile!['picture'],
           name: userCredential.additionalUserInfo?.profile!['given_name'],
           email: userCredential.additionalUserInfo?.profile!['email'],
           address: 'undefine');
     }
+    print(userCredential);
     return userCredential;
+  }
+
+  void prints(var s1) {
+    String s = s1.toString();
+    final pattern = RegExp('.{1,800}');
+    pattern.allMatches(s).forEach((match) => print(match.group(0)));
+  }
+
+  void printss(var s1) {
+    String s = s1.toString();
+    debugPrint(" =======> $s", wrapWidth: 20000);
+  }
+
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    final UserCredential userfaceCredential = await FirebaseAuth.instance
+        .signInWithCredential(facebookAuthCredential);
+
+    if (userfaceCredential.additionalUserInfo?.isNewUser == true) {
+      createUser(
+          name: userfaceCredential.additionalUserInfo!.profile!['name'],
+          email: userfaceCredential.additionalUserInfo!.profile!['email'],
+          address: 'undefine');
+    }
+    print(userfaceCredential.additionalUserInfo!.profile!);
+    return userfaceCredential;
   }
 }

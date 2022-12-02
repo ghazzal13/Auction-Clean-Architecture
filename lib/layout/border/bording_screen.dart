@@ -1,8 +1,8 @@
 import 'package:auction_clean_architecture/core/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../features/authentication/login_screen.dart';
 
 class BordingModel {
@@ -27,9 +27,10 @@ class _OnBorderingScreenState extends State<OnBorderingScreen> {
   var pageborder = PageController();
   var isLast = false;
   List<BordingModel> bording = [
-    BordingModel('asset/image/mazadat_1.png', 'Titel1', 'Body1'),
-    BordingModel('asset/image/mazadat_1.png', 'Titel2', 'Body2'),
-    BordingModel('asset/image/mazadat_1.png', 'Titel3', 'Body3'),
+    BordingModel('asset/image/border.1.jpg', 'You can bid at ', ' auctions'),
+    BordingModel('asset/image/add-border.2.jpg', 'add your own ', ' items'),
+    BordingModel(
+        'asset/image/border.2.jpg', 'And receive you items you win.', ' '),
   ];
 
   Future MM2() async {
@@ -40,16 +41,19 @@ class _OnBorderingScreenState extends State<OnBorderingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        automaticallyImplyLeading: true,
         actions: [
           TextButton(
             child: const Text(
               'skip',
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: primaryColor),
             ),
@@ -68,93 +72,146 @@ class _OnBorderingScreenState extends State<OnBorderingScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                itemBuilder: (context, index) =>
-                    buildBoardingiItem(bording[index]),
-                onPageChanged: (int index) {
-                  if (index == bording.length - 1) {
-                    setState(() {
-                      isLast = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLast = false;
-                    });
-                  }
-                },
-                itemCount: bording.length,
-                controller: pageborder,
-                physics: const BouncingScrollPhysics(),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: [
-                SmoothPageIndicator(
-                    controller: pageborder,
-                    effect: const ExpandingDotsEffect(
-                        activeDotColor: primaryColor,
-                        dotColor: Colors.grey,
-                        dotHeight: 10,
-                        spacing: 4,
-                        dotWidth: 10,
-                        expansionFactor: 5),
-                    count: bording.length),
-                const Spacer(),
-                FloatingActionButton(
-                  backgroundColor: primaryColor,
-                  onPressed: () {
-                    isLast
-                        ? MM2()
-                            // Chache()
-                            //     .saveData(key: 'onBordering', value: true)
-                            .then((value) {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
-                                (route) => false);
-                          })
-                        : pageborder.nextPage(
-                            duration: const Duration(milliseconds: 750),
-                            curve: Curves.fastLinearToSlowEaseIn);
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  itemBuilder: (context, index) => buildBoardingiItem(
+                    bording[index],
+                    size,
+                  ),
+                  onPageChanged: (int index) {
+                    if (index == bording.length - 1) {
+                      setState(() {
+                        isLast = true;
+                      });
+                    } else {
+                      setState(() {
+                        isLast = false;
+                      });
+                    }
                   },
-                  child: const Icon(Icons.arrow_forward_ios),
-                )
-              ],
-            )
-          ],
+                  itemCount: bording.length,
+                  controller: pageborder,
+                  physics: const BouncingScrollPhysics(),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SmoothPageIndicator(
+                      controller: pageborder,
+                      effect: const ExpandingDotsEffect(
+                          activeDotColor: primaryColor,
+                          dotColor: Colors.grey,
+                          dotHeight: 10,
+                          spacing: 4,
+                          dotWidth: 10,
+                          expansionFactor: 5),
+                      count: bording.length),
+                  const Spacer(),
+                  FloatingActionButton(
+                    backgroundColor: primaryColor,
+                    onPressed: () {
+                      isLast
+                          ? MM2()
+                              // Chache()
+                              //     .saveData(key: 'onBordering', value: true)
+                              .then((value) {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()),
+                                  (route) => false);
+                            })
+                          : pageborder.nextPage(
+                              duration: const Duration(milliseconds: 750),
+                              curve: Curves.fastLinearToSlowEaseIn);
+                    },
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ), //smooth_page_indicator
     );
   }
 
-  Widget buildBoardingiItem(BordingModel model) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildBoardingiItem(
+    BordingModel model,
+    Size size,
+  ) =>
+      Stack(
         children: [
-          Expanded(
-            child: SizedBox(
-                height: 300,
-                child: Image(
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
                   image: AssetImage(model.Image),
                   fit: BoxFit.cover,
                 )),
+            height: size.height * .8,
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: size.height * .8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(.5),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
           ),
-          Text(model.Titel),
-          const SizedBox(
-            height: 15,
+          Positioned(
+            bottom: size.height * .20,
+            left: 20,
+            child: SizedBox(
+              width: 200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    model.Titel,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                  Text(
+                    model.Body,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Text(model.Body),
         ],
       );
 }

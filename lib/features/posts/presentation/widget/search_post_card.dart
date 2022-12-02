@@ -1,23 +1,21 @@
+import 'package:auction_clean_architecture/features/auction_event/post_details_page.dart';
+import 'package:auction_clean_architecture/features/posts/data/models/posts_model.dart';
+import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-import '../../../auction_event/post_details_page.dart';
-import '../../domain/entities/posts_entity.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
-class Postcard extends StatefulWidget {
-  const Postcard({
-    Key? key,
-    required this.snap,
-  }) : super(key: key);
-
-  final dynamic snap;
+class SearchPostCard extends StatefulWidget {
+  final PostModel postModel;
+  const SearchPostCard({super.key, required this.postModel});
 
   @override
-  State<Postcard> createState() => _PostcardState();
+  State<SearchPostCard> createState() =>
+      _SearchPostCardState(postModel: postModel);
 }
 
-class _PostcardState extends State<Postcard> {
+class _SearchPostCardState extends State<SearchPostCard> {
+  PostModel postModel;
+  _SearchPostCardState({required this.postModel});
   Widget counterDownStarted({
     required int timeinSecond,
   }) =>
@@ -66,29 +64,10 @@ class _PostcardState extends State<Postcard> {
           context,
           MaterialPageRoute(
             builder: (context) => OnlineEventScreen(
-              duration: (widget.snap['startdate'].toDate())!
-                  .difference(DateTime.now())
-                  .inSeconds,
-              post1: PostsEntity(
-                uid: widget.snap['uid'].toString(),
-                name: widget.snap['name'].toString(),
-                image: widget.snap['image'].toString(),
-                price: widget.snap['price'],
-                postImage: widget.snap['postImage'].toString(),
-                postId: widget.snap['postId'].toString(),
-                category: widget.snap['category'].toString(),
-                startdate: DateTime.parse(
-                    widget.snap['startdate'].toDate().toString()),
-                enddate:
-                    DateTime.parse(widget.snap['enddate'].toDate().toString()),
-                postTime:
-                    DateTime.parse(widget.snap['postTime'].toDate().toString()),
-                titel: widget.snap['titel'].toString(),
-                description: widget.snap['description'].toString(),
-                winner: widget.snap['winner'].toString(),
-                winnerID: widget.snap['winnerID'].toString(),
-              ),
-              postId: widget.snap['postId'].toString(),
+              duration:
+                  (postModel.startdate).difference(DateTime.now()).inSeconds,
+              post1: postModel,
+              postId: postModel.postId.toString(),
             ),
           ),
         );
@@ -112,9 +91,7 @@ class _PostcardState extends State<Postcard> {
                     10.0,
                   ),
                   image: DecorationImage(
-                    image: NetworkImage(
-                      widget.snap['postImage'].toString(),
-                    ),
+                    image: NetworkImage(postModel.postImage.toString()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -136,14 +113,10 @@ class _PostcardState extends State<Postcard> {
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
-                            widget.snap['name'].toString(),
+                            postModel.name.toString(),
                             style: Theme.of(context).textTheme.bodyText1,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            ',${timeago.format(widget.snap['postTime'].toDate(), locale: 'en_short')} ',
-                            style: const TextStyle(color: Colors.black54),
                           ),
                         ],
                       ),
@@ -154,7 +127,7 @@ class _PostcardState extends State<Postcard> {
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
-                            widget.snap['titel'].toString(),
+                            postModel.titel.toString(),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -168,7 +141,7 @@ class _PostcardState extends State<Postcard> {
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
-                            widget.snap['category'].toString(),
+                            postModel.category.toString(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -180,7 +153,7 @@ class _PostcardState extends State<Postcard> {
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
-                            widget.snap['description'].toString(),
+                            postModel.description.toString(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -192,15 +165,13 @@ class _PostcardState extends State<Postcard> {
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text(
-                            ' ${widget.snap['price'].toString()} \$',
+                            postModel.price.toString(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                      (DateTime.now()
-                                  .isAfter(widget.snap['startdate'].toDate()) &&
-                              DateTime.now()
-                                  .isBefore(widget.snap['enddate'].toDate()))
+                      (DateTime.now().isAfter(postModel.startdate) &&
+                              DateTime.now().isBefore(postModel.enddate))
                           ? Row(
                               children: [
                                 const Text(
@@ -208,14 +179,12 @@ class _PostcardState extends State<Postcard> {
                                   style: TextStyle(color: Colors.grey),
                                 ),
                                 counterDownStarted(
-                                    timeinSecond:
-                                        (widget.snap['enddate'].toDate())!
-                                            .difference(DateTime.now())
-                                            .inSeconds),
+                                    timeinSecond: (postModel.enddate)
+                                        .difference(DateTime.now())
+                                        .inSeconds),
                               ],
                             )
-                          : DateTime.now()
-                                  .isAfter(widget.snap['enddate'].toDate())
+                          : DateTime.now().isAfter(postModel.enddate)
                               ? Row(
                                   children: [
                                     const Text(
@@ -223,7 +192,7 @@ class _PostcardState extends State<Postcard> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     Text(
-                                      ' ${widget.snap['winner'].toString()}',
+                                      postModel.winner.toString(),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -236,10 +205,9 @@ class _PostcardState extends State<Postcard> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     counterDown(
-                                      timeinSecond:
-                                          (widget.snap['startdate'].toDate())!
-                                              .difference(DateTime.now())
-                                              .inSeconds,
+                                      timeinSecond: (postModel.startdate)
+                                          .difference(DateTime.now())
+                                          .inSeconds,
                                     ),
                                   ],
                                 ),

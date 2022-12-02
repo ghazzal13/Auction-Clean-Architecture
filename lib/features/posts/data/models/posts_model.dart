@@ -1,5 +1,4 @@
 import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
-import 'package:flutter/foundation.dart';
 
 class PostModel extends PostsEntity {
   const PostModel({
@@ -10,9 +9,9 @@ class PostModel extends PostsEntity {
     super.postId,
     super.price,
     super.titel,
-    super.startdate,
-    super.enddate,
-    super.postTime,
+    required super.startdate,
+    required super.enddate,
+    required super.postTime,
     super.category,
     super.description,
     super.winner,

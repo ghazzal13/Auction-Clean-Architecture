@@ -30,7 +30,6 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     on<PostsEvent>((event, emit) async {
       if (event is GetAllPostsEvent) {
         emit(LoadingPostsState());
-        print('ppppppppppppppppppppppppppppppppppppppppppppppppppp');
         final failureOrPosts = await getAllPosts();
 
         emit(_mapFailureOrPostsToState(failureOrPosts));

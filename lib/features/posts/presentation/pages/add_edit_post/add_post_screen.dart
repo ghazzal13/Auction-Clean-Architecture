@@ -80,6 +80,7 @@ class _AddPostPageState extends State<AddPostPage> {
   @override
   Widget build(BuildContext context) {
     var userModel = AuctionCubit.get(context).userData;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -87,122 +88,145 @@ class _AddPostPageState extends State<AddPostPage> {
           '  Add Post',
         ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formkey,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30.0,
-                ),
-                postImage != null
-                    ? Stack(
-                        children: [
-                          SizedBox(
-                            height: 200.0,
-                            width: 200.0,
-                            child: Container(
-                              child: Image.file(
-                                postImage!,
-                                fit: BoxFit.cover,
-                              ),
-                              //   AspectRatio(
-                              // aspectRatio: 4 / 451,
-                            ),
-                          ),
-                          Positioned(
-                            top: 1,
-                            right: 1,
-                            child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  removePostImage();
-                                });
-                              },
-                              icon: const Icon(Icons.close_rounded, size: 25),
-                            ),
-                          ),
-                        ],
-                      )
-                    : TextButton(
-                        onPressed: () {
-                          setState(() {
-                            getPostImage();
-                          });
-                        },
-                        child: Row(
-                          children: const [
-                            Icon(Icons.photo_library_outlined),
-                            Text(
-                              'addPhoto',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                reuseFormField(
-                  controller: titel,
-                  type: TextInputType.text,
-                  validate:
-                      ValidationBuilder(requiredMessage: 'can not be emity')
-                          .build(),
-                  label: 'Titel',
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                reuseFormField(
-                  controller: description,
-                  type: TextInputType.emailAddress,
-                  validate:
-                      ValidationBuilder(requiredMessage: 'can not be emity')
-                          .build(),
-                  label: ' Description',
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .45,
-                      child: reuseFormField(
-                        controller: price,
-                        type: TextInputType.number,
-                        validate: ValidationBuilder(
-                                requiredMessage: 'can not be emity')
-                            .build(),
-                        label: 'Price',
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    SelectCategory(),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                SelectDate(),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                addButton(userModel),
-                const SizedBox(
-                  height: 30.0,
-                ),
-              ],
+      body: Stack(
+        children: [
+          Container(
+            height: size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("asset/image/222.jpg"),
+                fit: BoxFit.fitWidth,
+              ),
             ),
           ),
-        ),
+          SingleChildScrollView(
+            child: Form(
+              key: formkey,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    postImage != null
+                        ? Stack(
+                            children: [
+                              SizedBox(
+                                height: 200.0,
+                                width: 200.0,
+                                child: Container(
+                                  child: Image.file(
+                                    postImage!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  //   AspectRatio(
+                                  // aspectRatio: 4 / 451,
+                                ),
+                              ),
+                              Positioned(
+                                top: 1,
+                                right: 1,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.black.withOpacity(.5),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        removePostImage();
+                                      });
+                                    },
+                                    icon: const Icon(
+                                      Icons.close_rounded,
+                                      size: 25,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : TextButton(
+                            onPressed: () {
+                              setState(() {
+                                getPostImage();
+                              });
+                            },
+                            child: Row(
+                              children: const [
+                                Icon(Icons.photo_library_outlined),
+                                Text(
+                                  'addPhoto',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    reuseFormField(
+                      controller: titel,
+                      type: TextInputType.text,
+                      validate:
+                          ValidationBuilder(requiredMessage: 'can not be emity')
+                              .build(),
+                      label: 'Titel',
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    reuseFormField(
+                      controller: description,
+                      type: TextInputType.emailAddress,
+                      validate:
+                          ValidationBuilder(requiredMessage: 'can not be emity')
+                              .build(),
+                      label: ' Description',
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .45,
+                          child: reuseFormField(
+                            controller: price,
+                            type: TextInputType.number,
+                            validate: ValidationBuilder(
+                                    requiredMessage: 'can not be emity')
+                                .build(),
+                            label: 'Price',
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        SelectCategory(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    SelectDate(),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    addButton(userModel),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
