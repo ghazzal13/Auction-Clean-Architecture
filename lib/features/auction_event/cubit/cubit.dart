@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../authentication/cubit/user.dart';
@@ -102,6 +103,21 @@ class AuctionCubit extends Cubit<AuctionStates> {
     });
   }
 
+  var picker = ImagePicker();
+  Future<void> getProfileImage() async {
+    final pickedFile = await picker.getImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      print(pickedFile.path);
+      emit(AuctionProfileImagePickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(AuctionProfileImagePickedErrorState());
+    }
+  }
+
   void updatePostState({
     bool? isStarted,
     bool? isFinish,
@@ -133,7 +149,11 @@ class AuctionCubit extends Cubit<AuctionStates> {
     });
   }
 
-  PostModel postByID = const PostModel();
+  PostModel postByID = PostModel(
+    enddate: DateTime(10),
+    postTime: DateTime(10),
+    startdate: DateTime(10),
+  );
   Future<dynamic> getPostById({required String id}) async {
     emit(AuctionGetPostLoadingState());
     await FirebaseFirestore.instance
@@ -221,13 +241,13 @@ class AuctionCubit extends Cubit<AuctionStates> {
         .where('titel', isLessThan: '${searchKey}z')
         .snapshots()
         .listen((event) {
-      // search.clear();
+      search.clear();
       for (var element in event.docs) {
         search.add(PostModel.fromMap(
           element.data(),
         ));
 
-        print(element.data()['category']);
+        print(element.data()['name']);
       }
       emit(AuctionGetCommentSuccessState());
     });

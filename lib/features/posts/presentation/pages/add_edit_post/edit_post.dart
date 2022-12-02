@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:auction_clean_architecture/core/strings/messages.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
+import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
 import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
+import 'package:auction_clean_architecture/layout/layout.dart';
+import 'package:auction_clean_architecture/reuse/reuse_navigator_method.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,7 @@ class EditPostScreen extends StatefulWidget {
 }
 
 class _EditPostScreenState extends State<EditPostScreen> {
-  PostsEntity post;
+  final PostsEntity post;
   _EditPostScreenState({required this.post});
   var formkey = GlobalKey<FormState>();
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -42,10 +43,10 @@ class _EditPostScreenState extends State<EditPostScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     titel.dispose();
     description.dispose();
     price.dispose();
+    super.dispose();
   }
 
   File? postImage;
@@ -68,6 +69,16 @@ class _EditPostScreenState extends State<EditPostScreen> {
   }
 
   late String postImageUrl;
+  @override
+  void initState() {
+    titel.text = post.titel!;
+    description.text = post.description!;
+    price.text = post.price.toString();
+    mazadTime = post.startdate;
+    category = post.category!;
+
+    super.initState();
+  }
 
   Future Upload(File? postImage) async {
     await firebase_storage.FirebaseStorage.instance
@@ -85,16 +96,9 @@ class _EditPostScreenState extends State<EditPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userModel = AuthCubit.get(context).userData;
+    var userModel = AuctionCubit.get(context).userData;
 
-    setState(() {
-      titel.text = post.titel!;
-      description.text = post.description!;
-      price.text = post.price.toString();
-      mazadTime = post.startdate!;
-      category = post.category!;
-    });
-
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -102,147 +106,173 @@ class _EditPostScreenState extends State<EditPostScreen> {
           '   Edit Post',
         ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: formkey,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30.0,
-                ),
-                !close
-                    ? Stack(children: [
-                        Container(
-                          width: 250,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage('${post.postImage}'),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 1,
-                          right: 1,
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                close = true;
-                              });
-                            },
-                            icon: const Icon(Icons.close_rounded, size: 25),
-                          ),
-                        ),
-                      ])
-                    : postImage != null
-                        ? Stack(
-                            children: [
-                              SizedBox(
-                                height: 200.0,
-                                width: 200.0,
-                                child: Container(
-                                  child: Image.file(
-                                    postImage!,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  //   AspectRatio(
-                                  // aspectRatio: 4 / 451,
+      body: Stack(
+        children: [
+          Container(
+            height: size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("asset/image/222.jpg"),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          SingleChildScrollView(
+            child: Form(
+              key: formkey,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    !close
+                        ? Stack(children: [
+                            Container(
+                              width: 250,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage('${post.postImage}'),
                                 ),
                               ),
-                              Positioned(
-                                top: 1,
-                                right: 1,
+                            ),
+                            Positioned(
+                              top: 1,
+                              right: 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.black.withOpacity(.5)),
                                 child: IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      removePostImage();
+                                      close = true;
                                     });
                                   },
-                                  icon:
-                                      const Icon(Icons.close_rounded, size: 25),
+                                  icon: const Icon(Icons.close_rounded,
+                                      size: 25, color: Colors.white),
                                 ),
                               ),
-                            ],
-                          )
-                        : TextButton(
-                            onPressed: () {
-                              setState(() {
-                                getPostImage();
-                              });
-                            },
-                            child: Row(
-                              children: const [
-                                Icon(Icons.photo_library_outlined),
-                                Text(
-                                  'addPhoto',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
                             ),
-                          ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                reuseFormField(
-                  controller: titel,
-                  type: TextInputType.text,
-                  validate:
-                      ValidationBuilder(requiredMessage: 'can not be emity')
-                          .build(),
-                  label: 'Titel',
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                reuseFormField(
-                  controller: description,
-                  type: TextInputType.emailAddress,
-                  validate:
-                      ValidationBuilder(requiredMessage: 'can not be emity')
-                          .build(),
-                  label: ' Description',
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .45,
-                      child: reuseFormField(
-                        controller: price,
-                        type: TextInputType.number,
-                        validate: ValidationBuilder(
-                                requiredMessage: 'can not be emity')
-                            .build(),
-                        label: 'Price',
-                      ),
+                          ])
+                        : postImage != null
+                            ? Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 200.0,
+                                    width: 200.0,
+                                    child: Container(
+                                      child: Image.file(
+                                        postImage!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      //   AspectRatio(
+                                      // aspectRatio: 4 / 451,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 1,
+                                    right: 1,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: Colors.black.withOpacity(.5)),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            removePostImage();
+                                          });
+                                        },
+                                        icon: const Icon(Icons.close_rounded,
+                                            color: Colors.white, size: 25),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    getPostImage();
+                                  });
+                                },
+                                child: Row(
+                                  children: const [
+                                    Icon(Icons.photo_library_outlined),
+                                    Text(
+                                      'addPhoto',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    reuseFormField(
+                      controller: titel,
+                      type: TextInputType.text,
+                      validate:
+                          ValidationBuilder(requiredMessage: 'can not be emity')
+                              .build(),
+                      label: 'Titel',
                     ),
                     const SizedBox(
-                      width: 15,
+                      height: 30.0,
                     ),
-                    SelectCategory(),
+                    reuseFormField(
+                      controller: description,
+                      type: TextInputType.emailAddress,
+                      validate:
+                          ValidationBuilder(requiredMessage: 'can not be emity')
+                              .build(),
+                      label: ' Description',
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .45,
+                          child: reuseFormField(
+                            controller: price,
+                            type: TextInputType.number,
+                            validate: ValidationBuilder(
+                                    requiredMessage: 'can not be emity')
+                                .build(),
+                            label: 'Price',
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        SelectCategory(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    SelectDate(),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    addButton(userModel, post, context),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                SelectDate(),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                AddButton(userModel),
-                const SizedBox(
-                  height: 30.0,
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -273,7 +303,8 @@ class _EditPostScreenState extends State<EditPostScreen> {
               ),
       );
 
-  Widget AddButton(UserModel userModel) => FloatingActionButton.extended(
+  Widget addButton(UserModel userModel, PostsEntity post, context) =>
+      FloatingActionButton.extended(
         onPressed: () {
           setState(() {
             _isLoading = true;
@@ -289,33 +320,46 @@ class _EditPostScreenState extends State<EditPostScreen> {
                     .putFile(postImage!)
                     .then((p0) {
                   p0.ref.getDownloadURL().then((value) {
-                    final post = PostsEntity(
-                      name: userModel.name,
-                      uid: userModel.uid,
-                      image: userModel.image,
-                      price: int.parse(price.text),
-                      titel: titel.text,
-                      startdate: mazadTime,
-                      enddate: mazadTime.add(const Duration(days: 3)),
-                      postTime: DateTime.now(),
-                      category: dropdownValue.toString(),
-                      description: description.text,
-                      winner: 'winner',
-                      winnerID: 'winnerID',
-                      postImage: value,
-                    );
-                    BlocProvider.of<PostsBloc>(context).add(AddPostEvent(
-                      post: post,
-                    ));
+                    FirebaseFirestore.instance
+                        .collection('posts')
+                        .doc(post.postId)
+                        .set({
+                      'uid': userModel.uid,
+                      'image': userModel.image,
+                      'price': int.parse(price.text),
+                      'titel': titel.text,
+                      'startdate': mazadTime,
+                      'enddate': mazadTime.add(const Duration(days: 3)),
+                      'category': dropdownValue.toString(),
+                      'description': description.text,
+                      'winner': 'winner',
+                      'winnerID': 'winnerID',
+                      'postImage': value,
+                    }, SetOptions(merge: true));
+                    // final post = PostsEntity(
+                    //   name: userModel.name,
+                    //   uid: userModel.uid,
+                    //   image: userModel.image,
+                    //   postTime: DateTime.now(),
+                    //   price: int.parse(price.text),
+                    //   titel: titel.text,
+                    //   startdate: mazadTime,
+                    //   enddate: mazadTime.add(const Duration(days: 3)),
+                    //   category: dropdownValue.toString(),
+                    //   description: description.text,
+                    //   winner: 'winner',
+                    //   winnerID: 'winnerID',
+                    //   postImage: value,
+                    // );
                   }).then((_) {
                     showSnackBar(context, UPDATE_SUCCESS_MESSAGE);
+                    navigateTo(context, const ManagementLayout());
                     removePostImage();
                     mazadTime = DateTime(1, 1, 1, 1);
                     titel.clear();
                     price.clear();
                     description.clear();
                     _isLoading = false;
-                    Navigator.pop(context);
                   });
                 });
               } else {
@@ -325,6 +369,24 @@ class _EditPostScreenState extends State<EditPostScreen> {
                 showToast(text: 'select date', state: ToastStates.ERROR);
               }
             }
+          } else if (close == false) {
+            FirebaseFirestore.instance
+                .collection('posts')
+                .doc(post.postId)
+                .set({
+              'uid': userModel.uid,
+              'image': userModel.image,
+              'price': int.parse(price.text),
+              'titel': titel.text,
+              'startdate': mazadTime,
+              'enddate': mazadTime.add(const Duration(days: 3)),
+              'category': dropdownValue.toString(),
+              'description': description.text,
+              'winner': 'winner',
+              'winnerID': 'winnerID',
+            }, SetOptions(merge: true)).then((value) {
+              navigateTo(context, const ManagementLayout());
+            });
           } else {
             setState(() {
               _isLoading = false;
@@ -334,7 +396,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
         },
         label: !_isLoading
             ? Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -343,8 +405,10 @@ class _EditPostScreenState extends State<EditPostScreen> {
                     padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                     child: Text(
                       'Update',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                   ),
                 ),

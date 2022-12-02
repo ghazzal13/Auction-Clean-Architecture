@@ -9,9 +9,9 @@ class PostsEntity extends Equatable {
   final String? postId;
   final int? price;
   final String? titel;
-  final DateTime? startdate;
-  final DateTime? enddate;
-  final DateTime? postTime;
+  final DateTime startdate;
+  final DateTime enddate;
+  final DateTime postTime;
   final String? category;
   final String? description;
   final String? winner;
