@@ -50,7 +50,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("asset/image/222.jpg"),
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
@@ -84,17 +84,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         backgroundColor: Colors.red,
                                       ),
                                 Positioned(
-                                  bottom: -10,
-                                  left: 80,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      AuctionCubit.get(context)
-                                          .getProfileImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.add_a_photo_outlined,
-                                      color: Colors.black,
-                                      size: 30,
+                                  bottom: 10,
+                                  left: 140,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: Colors.black.withOpacity(.5)),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        AuctionCubit.get(context)
+                                            .getProfileImage();
+                                      },
+                                      icon: const Icon(
+                                        Icons.add_a_photo_outlined,
+                                        color: Colors.white,
+                                        size: 22,
+                                      ),
                                     ),
                                   ),
                                 )
