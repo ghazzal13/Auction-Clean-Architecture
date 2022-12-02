@@ -12,6 +12,7 @@ import 'features/posts/di/posts_injector.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
 import 'features/posts/presentation/blocs/posts_bloc.dart';
 import 'firebase_options.dart';
+import 'package:page_transition/page_transition.dart';
 import 'layout/border/bording_screen.dart';
 import 'dart:async';
 
@@ -105,6 +106,7 @@ class _MyAppState extends State<MyApp> {
                 },
               ),
               splashTransition: SplashTransition.fadeTransition,
+              pageTransitionType: PageTransitionType.theme,
               backgroundColor: const Color.fromARGB(255, 6, 101, 92))),
     );
   }

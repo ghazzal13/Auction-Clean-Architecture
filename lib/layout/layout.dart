@@ -36,10 +36,10 @@ class _ManagementLayoutState extends State<ManagementLayout> {
 
   @override
   void initState() {
-    super.initState();
-
     currentUser = FirebaseAuth.instance.currentUser;
     getData();
+
+    super.initState();
   }
 
   @override
@@ -47,30 +47,6 @@ class _ManagementLayoutState extends State<ManagementLayout> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: _widgetOptions.elementAt(currentIndex),
-/*
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'AddPost',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'profile',
-          ),
-        ],
-        currentIndex: selectedIndex,
-        selectedItemColor: Colors.yellow,
-        onTap: onselect,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: primaryColor,
-        unselectedItemColor: Colors.white,
-      ),
-  */
       bottomNavigationBar: Container(
         margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         height: screenWidth * .155,
