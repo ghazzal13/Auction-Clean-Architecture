@@ -27,8 +27,8 @@ class _OnBorderingScreenState extends State<OnBorderingScreen> {
   var pageborder = PageController();
   var isLast = false;
   List<BordingModel> bording = [
-    BordingModel('asset/image/border.1.jpg', 'You can bid at ', ' auctions'),
-    BordingModel('asset/image/add-border.2.jpg', 'add your own ', ' items'),
+    BordingModel('asset/image/border.1.jpg', 'You can bid at ', ' Auctions'),
+    BordingModel('asset/image/add-border.2.jpg', 'Add your own ', ' Items'),
     BordingModel(
         'asset/image/border.2.jpg', 'And receive you items you win.', ' '),
   ];

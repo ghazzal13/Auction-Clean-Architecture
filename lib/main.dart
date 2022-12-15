@@ -1,10 +1,11 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:auction_clean_architecture/core/app_theme.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
-import 'package:auction_clean_architecture/features/authentication/login_screen.dart';
-import 'package:auction_clean_architecture/layout/layout.dart';
+import 'core/app_theme.dart';
+import 'features/authentication/cubit/auth_methoed.dart';
+import 'features/authentication/login_screen.dart';
+import 'layout/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/auction_event/cubit/cubit.dart';
@@ -22,7 +23,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
+      overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
@@ -62,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: appTheme,
           home: AnimatedSplashScreen(
-              duration: 3000,
+              duration: 1000,
               splash: Container(
                 width: 200.0,
                 height: 200.0,

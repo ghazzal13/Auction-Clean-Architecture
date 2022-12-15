@@ -1,5 +1,4 @@
 import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,7 +15,6 @@ class ManagementLayout extends StatefulWidget {
 
 class _ManagementLayoutState extends State<ManagementLayout> {
   int currentIndex = 0;
-  var currentUser;
   static const List<Widget> _widgetOptions = <Widget>[
     PostsPage(),
     AddPostPage(),
@@ -36,7 +34,6 @@ class _ManagementLayoutState extends State<ManagementLayout> {
 
   @override
   void initState() {
-    currentUser = FirebaseAuth.instance.currentUser;
     getData();
 
     super.initState();
