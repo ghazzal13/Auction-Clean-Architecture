@@ -12,7 +12,7 @@ Firstly, I develop three onboarding screens.
  
 </p>
 
-In feed screen the user found thw auctions that is coming soon, and he can categorize the auctions in(caras, mobiles, Antiques, paintings, furniture electronic devices).
+In feed screen the user found the auctions that is coming soon, and he can categorize the auctions in(caras, mobiles, Antiques, paintings, furniture electronic devices), Also, he can search in Items with title, And he can navigate to the other screens with BottomNavigationBar.
 
 
 <p align="center"> 
