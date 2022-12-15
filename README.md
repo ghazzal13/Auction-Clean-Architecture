@@ -3,6 +3,7 @@ you determined. And I added some Animation Widgets to improve the user interface
  
 Firstly, I develop three onboarding screens.
 
+
 <p align="center"> 
 
 <img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="300">
@@ -15,10 +16,33 @@ In feed screen the user found thw auctions that is coming soon, and he can categ
 
 
 <p align="center"> 
+
+<img src="https://user-images.githubusercontent.com/52837541/207917464-9b98f516-6fce-425c-9034-cc85efffaf73.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg" width="300">
+ 
+</p>
+//
+//
+//
+//
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+<p align="center"> 
  
  
 
 
+<img src="https://user-images.githubusercontent.com/52837541/207917464-9b98f516-6fce-425c-9034-cc85efffaf73.jpg" width="300">
 
 
 
