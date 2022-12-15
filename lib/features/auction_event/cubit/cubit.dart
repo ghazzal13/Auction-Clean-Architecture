@@ -18,9 +18,9 @@ class AuctionCubit extends Cubit<AuctionStates> {
 
   static AuctionCubit get(context) => BlocProvider.of(context);
 
-  var currentUser = FirebaseAuth.instance.currentUser;
   UserModel userData = UserModel();
   void getUserzData() {
+    var currentUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance
         .collection("users")
         .doc(currentUser!.uid)
