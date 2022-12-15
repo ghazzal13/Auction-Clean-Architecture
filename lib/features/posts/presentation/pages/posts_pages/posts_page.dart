@@ -57,7 +57,7 @@ class _PostsPageState extends State<PostsPage> {
             : TextFormField(
                 onChanged: (value) {
                   setState(() {
-                    AuctionCubit.get(context).getSearch(value);
+                    AuctionCubit.get(context).getSearch(value.toUpperCase());
                   });
                 },
                 controller: searchController,

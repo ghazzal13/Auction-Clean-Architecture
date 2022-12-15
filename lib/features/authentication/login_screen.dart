@@ -149,24 +149,14 @@ class _LoginScreenState extends State<LoginScreen>
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            const SizedBox(
+                                height: 100,
+                                child: Image(
+                                  image:
+                                      AssetImage('asset/image/mazadat_1.png'),
+                                  fit: BoxFit.cover,
+                                )),
                             const SizedBox(),
-                            Text(
-                              'Sign In',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black.withOpacity(.7),
-                              ),
-                            ),
-                            // const SizedBox(
-                            //     height: 100,
-                            //     child: Image(
-                            //       image:
-                            //           AssetImage('asset/image/mazadat_1.png'),
-                            //       fit: BoxFit.cover,
-                            //     )),
-                            const SizedBox(),
-
                             reuseFormField(
                               controller: _email,
                               type: TextInputType.emailAddress,

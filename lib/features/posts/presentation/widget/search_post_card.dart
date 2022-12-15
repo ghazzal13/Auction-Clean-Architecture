@@ -1,6 +1,5 @@
 import 'package:auction_clean_architecture/features/auction_event/post_details_page.dart';
 import 'package:auction_clean_architecture/features/posts/data/models/posts_model.dart';
-import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
@@ -148,13 +147,16 @@ class _SearchPostCardState extends State<SearchPostCard> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            'description ',
-                            style: TextStyle(color: Colors.grey),
+                          const Flexible(
+                            child: Text(
+                              'description ',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ),
                           Text(
                             postModel.description.toString(),
                             style: const TextStyle(fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),

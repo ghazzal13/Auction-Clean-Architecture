@@ -322,6 +322,7 @@ class _SingUpScreenState extends State<SingUpScreen>
                                     const EdgeInsets.symmetric(vertical: 8),
                                 child: const Text(
                                   'I have an account?',
+                                  style: TextStyle(color: Colors.blue),
                                 ),
                               ),
                               GestureDetector(
@@ -337,6 +338,7 @@ class _SingUpScreenState extends State<SingUpScreen>
                                     ' Login.',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                 ),

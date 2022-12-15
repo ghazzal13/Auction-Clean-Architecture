@@ -135,11 +135,13 @@ class _PostcardState extends State<Postcard> {
                             'from ',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text(
-                            widget.snap['name'].toString(),
-                            style: Theme.of(context).textTheme.bodyText1,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                          Flexible(
+                            child: Text(
+                              widget.snap['name'].toString(),
+                              style: Theme.of(context).textTheme.bodyText1,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Text(
                             ',${timeago.format(widget.snap['postTime'].toDate(), locale: 'en_short')} ',
@@ -149,9 +151,12 @@ class _PostcardState extends State<Postcard> {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            'titel ',
-                            style: TextStyle(color: Colors.grey),
+                          const Flexible(
+                            child: Text(
+                              'titel ',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ),
                           Text(
                             widget.snap['titel'].toString(),
@@ -179,9 +184,14 @@ class _PostcardState extends State<Postcard> {
                             'description ',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text(
-                            widget.snap['description'].toString(),
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          Flexible(
+                            child: Text(
+                              widget.snap['description'].toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -191,9 +201,13 @@ class _PostcardState extends State<Postcard> {
                             'starting Price',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text(
-                            ' ${widget.snap['price'].toString()} \$',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          Flexible(
+                            child: Text(
+                              ' ${widget.snap['price'].toString()} \$',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
