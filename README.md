@@ -5,9 +5,9 @@ Firstly, I develop three onboarding screens.
 
 
 <p align="center"> 
-<img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="300">
-<img src="https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg" width="300">
-<img src="https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="250">
+<img src="https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg" width="250">
+<img src="https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg" width="250">
 </p>
 
 In the sign-up screen, you found that you can sign up with Google, or Facebook or you can use a normal email and password sign-up, and if the user has email he can log-in normally.
