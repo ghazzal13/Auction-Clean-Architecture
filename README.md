@@ -5,8 +5,10 @@ Firstly, I develop three onboarding screens.
 
 <p align="center"> 
 
-![Screenshot_2022-12-15-18-00-36-10_4e0a55a4e546a0017073e8eda5b0c691](https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg)
-![Screenshot_2022-12-15-18-00-40-02_4e0a55a4e546a0017073e8eda5b0c691]
+<img src="https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="300">
+) 
 (https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg)![Screenshot_2022-12-15-18-00-31-66_4e0a55a4e546a0017073e8eda5b0c691]
 (https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg)
 </p>
