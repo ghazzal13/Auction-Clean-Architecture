@@ -25,85 +25,166 @@ class PostBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Divider(
+              color: Colors.grey,
+            ),
             const SizedBox(
               height: 5,
             ),
+            RichText(
+                text: TextSpan(
+                    text: 'Titel: ',
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    children: <TextSpan>[
+                  TextSpan(
+                      text: '${post1.titel}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20,
+                      ))
+                ])),
+            const SizedBox(height: 5),
+            // Row(
+            //   children: [
+            //     const Text(
+            //       'Titel: ',
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     Text(
+            //       '${post1.titel}',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Colors.teal[600],
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Titel: ',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${post1.titel}',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.teal[600],
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                RichText(
+                    text: TextSpan(
+                        text: 'Category: ',
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                        children: <TextSpan>[
+                      TextSpan(
+                          text: '${post1.category}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 20,
+                          ))
+                    ])),
+                const SizedBox(height: 5),
+                RichText(
+                    text: TextSpan(
+                        text: 'Price: ',
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                        children: <TextSpan>[
+                      TextSpan(
+                          text: '${postmmm.price} \$',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 20,
+                          ))
+                    ])),
+                const SizedBox()
               ],
             ),
-            Row(
-              children: [
-                const Text(
-                  'Category: ',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${post1.category}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text(
-                  'Price: ',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${postmmm.price}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const Text(
-              'Description:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              child: Text(
-                '${post1.description}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.teal[600],
-                  fontWeight: FontWeight.w600,
-                ),
-                // maxLines: 5,
-                // overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            const SizedBox(height: 5),
+            // Row(
+            //   children: [
+            //     const Text(
+            //       'Category: ',
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     Text(
+            //       '${post1.category}',
+            //       style: const TextStyle(
+            //         fontSize: 20,
+            //         color: Colors.teal,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // Row(
+            //   children: [
+            //     const Text(
+            //       'Price: ',
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     Text(
+            //       '${postmmm.price}',
+            //       style: const TextStyle(
+            //         fontSize: 20,
+            //         color: Colors.teal,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            const SizedBox(height: 5),
+            RichText(
+                text: TextSpan(
+                    text: 'Description: ',
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    children: <TextSpan>[
+                  TextSpan(
+                      text: '${post1.description}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20,
+                      ))
+                ])),
+            const SizedBox(height: 5),
+            // const Text(
+            //   'Description:',
+            //   style: TextStyle(
+            //     fontSize: 16,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // SizedBox(
+            //   child: Text(
+            //     '${post1.description}',
+            //     style: TextStyle(
+            //       fontSize: 14,
+            //       color: Colors.teal[600],
+            //       fontWeight: FontWeight.w600,
+            //     ),
+
+            //   ),
+            // ),
           ],
         ),
       ],
