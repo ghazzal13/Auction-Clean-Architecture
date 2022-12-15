@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:auction_clean_architecture/core/strings/messages.dart';
-import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
-import 'package:auction_clean_architecture/layout/layout.dart';
-import 'package:auction_clean_architecture/reuse/reuse_navigator_method.dart';
+import '../../../../../core/strings/messages.dart';
+import '../../../../auction_event/cubit/cubit.dart';
+import '../../../../authentication/cubit/user.dart';
+import '../../../../../layout/layout.dart';
+import '../../../../../reuse/reuse_navigator_method.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -327,30 +327,15 @@ class _EditPostScreenState extends State<EditPostScreen> {
                       'uid': userModel.uid,
                       'image': userModel.image,
                       'price': int.parse(price.text),
-                      'titel': titel.text,
+                      'titel': titel.text.toUpperCase(),
                       'startdate': mazadTime,
-                      'enddate': mazadTime.add(const Duration(days: 3)),
+                      'enddate': mazadTime.add(const Duration(hours: 3)),
                       'category': dropdownValue.toString(),
                       'description': description.text,
                       'winner': 'winner',
                       'winnerID': 'winnerID',
                       'postImage': value,
                     }, SetOptions(merge: true));
-                    // final post = PostsEntity(
-                    //   name: userModel.name,
-                    //   uid: userModel.uid,
-                    //   image: userModel.image,
-                    //   postTime: DateTime.now(),
-                    //   price: int.parse(price.text),
-                    //   titel: titel.text,
-                    //   startdate: mazadTime,
-                    //   enddate: mazadTime.add(const Duration(days: 3)),
-                    //   category: dropdownValue.toString(),
-                    //   description: description.text,
-                    //   winner: 'winner',
-                    //   winnerID: 'winnerID',
-                    //   postImage: value,
-                    // );
                   }).then((_) {
                     showSnackBar(context, UPDATE_SUCCESS_MESSAGE);
                     navigateTo(context, const ManagementLayout());
@@ -377,9 +362,9 @@ class _EditPostScreenState extends State<EditPostScreen> {
               'uid': userModel.uid,
               'image': userModel.image,
               'price': int.parse(price.text),
-              'titel': titel.text,
+              'titel': titel.text.toUpperCase(),
               'startdate': mazadTime,
-              'enddate': mazadTime.add(const Duration(days: 3)),
+              'enddate': mazadTime.add(const Duration(hours: 3)),
               'category': dropdownValue.toString(),
               'description': description.text,
               'winner': 'winner',

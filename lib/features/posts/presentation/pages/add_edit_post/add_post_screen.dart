@@ -1,20 +1,19 @@
 import 'dart:io';
 
-import 'package:auction_clean_architecture/core/app_theme.dart';
-import 'package:auction_clean_architecture/core/strings/messages.dart';
-import 'package:auction_clean_architecture/features/auction_event/cubit/cubit.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/user.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/blocs/posts_bloc.dart';
+import '../../../../../core/app_theme.dart';
+import '../../../../../core/strings/messages.dart';
+import '../../../../auction_event/cubit/cubit.dart';
+import '../../../../authentication/cubit/user.dart';
+import '../../blocs/posts_bloc.dart';
 import 'package:date_format/date_format.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../../../domain/entities/posts_entity.dart';
 import '../../widget/reuse_widget.dart';
 
@@ -295,9 +294,9 @@ class _AddPostPageState extends State<AddPostPage> {
                       uid: userModel.uid,
                       image: userModel.image,
                       price: int.parse(price.text),
-                      titel: titel.text,
+                      titel: titel.text.toUpperCase(),
                       startdate: mazadTime,
-                      enddate: mazadTime.add(const Duration(days: 3)),
+                      enddate: mazadTime.add(const Duration(hours: 3)),
                       postTime: DateTime.now(),
                       category: dropdownValue.toString(),
                       description: description.text,
