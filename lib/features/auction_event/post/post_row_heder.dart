@@ -1,5 +1,4 @@
 import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
-import 'package:auction_clean_architecture/features/posts/presentation/pages/add_edit_post/edit_post.dart';
 import 'package:flutter/material.dart';
 
 class PostRowHeder extends StatelessWidget {
@@ -20,7 +19,6 @@ class PostRowHeder extends StatelessWidget {
   bool isMyPost = false;
   @override
   Widget build(BuildContext context) {
-    isMyPost = (post.uid == userId);
     return Row(
       children: [
         CircleAvatar(
@@ -55,23 +53,6 @@ class PostRowHeder extends StatelessWidget {
         const Spacer(
           flex: 1,
         ),
-        isMyPost
-            ? IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditPostScreen(
-                              post: post,
-                            )),
-                  );
-                },
-                icon: const Icon(
-                  Icons.edit_outlined,
-                ),
-                iconSize: 30,
-              )
-            : Container()
       ],
     );
   }

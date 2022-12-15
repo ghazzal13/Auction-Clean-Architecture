@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:auction_clean_architecture/features/auction_event/cubit/states.dart';
 import 'package:auction_clean_architecture/features/auction_event/post/post_dody.dart';
 import 'package:auction_clean_architecture/features/auction_event/post/post_row_heder.dart';
-import 'package:auction_clean_architecture/features/authentication/cubit/auth_methoed.dart';
 import 'package:auction_clean_architecture/features/posts/domain/entities/posts_entity.dart';
 import 'package:auction_clean_architecture/features/posts/presentation/pages/add_edit_post/edit_post.dart';
 import 'package:auction_clean_architecture/reuse/reuse_navigator_method.dart';
@@ -74,20 +73,21 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
     return BlocConsumer<AuctionCubit, AuctionStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          var userModel = AuthCubit.get(context).userData;
+          var userModel = AuctionCubit.get(context).userData;
           var postmmm = AuctionCubit.get(context).postByID;
-
           return Scaffold(
             appBar: AppBar(
               backgroundColor: primaryColor,
               // title: Text('${postmmm.titel}'),
               title: Text('${post1.titel}'),
               actions: [
-                IconButton(
-                    onPressed: () {
-                      navigateAndremove(context, EditPostScreen(post: post1));
-                    },
-                    icon: const Icon(Icons.mode_edit_outlined))
+                userModel.uid == postmmm.uid
+                    ? IconButton(
+                        onPressed: () {
+                          navigateTo(context, EditPostScreen(post: post1));
+                        },
+                        icon: const Icon(Icons.mode_edit_outlined))
+                    : Container()
               ],
             ),
             body: Container(
@@ -125,7 +125,7 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
                     ),
                     PostBody(post1: post1),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     remaningTime(duration, context),
                     ListTile(
@@ -384,12 +384,13 @@ class _OnlineEventScreenState extends State<OnlineEventScreen>
 Widget remaningTime(duration, context) {
   return (duration > 0)
       ? Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'remaning time:',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
+                color: Colors.grey[800],
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -402,8 +403,9 @@ Widget remaningTime(duration, context) {
                     build: (BuildContext context, double time) => Text(
                       '${Duration(seconds: time.toInt()).inHours.remainder(24).toString()}:${Duration(seconds: time.toInt()).inMinutes.remainder(60).toString()}:${Duration(seconds: time.toInt()).inSeconds.remainder(60).toString().padLeft(2, '0')}',
                       style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.teal,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     interval: const Duration(seconds: 1),
@@ -416,8 +418,9 @@ Widget remaningTime(duration, context) {
                     build: (BuildContext context, double time) => Text(
                       '${Duration(seconds: time.toInt()).inDays.remainder(365).toString()}:${Duration(seconds: time.toInt()).inHours.remainder(24).toString()}:${Duration(seconds: time.toInt()).inMinutes.remainder(60).toString()}:${Duration(seconds: time.toInt()).inSeconds.remainder(60).toString().padLeft(2, '0')}',
                       style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.teal,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     interval: const Duration(seconds: 1),
