@@ -17,9 +17,11 @@ In feed screen the user found thw auctions that is coming soon, and he can categ
 
 <p align="center"> 
 
-<img src="https://user-images.githubusercontent.com/52837541/207917464-9b98f516-6fce-425c-9034-cc85efffaf73.jpg" width="300">
-<img src="https://user-images.githubusercontent.com/52837541/207908839-21e4f350-0ea1-47cc-81b8-1608ff38d3f5.jpg" width="300">
-<img src="https://user-images.githubusercontent.com/52837541/207908864-13bb98b6-dfbb-4df1-bebe-3267dbf878d2.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207908993-f5283579-2922-4408-9761-1f1d0232e1be.jpg" width="300"> 
+<img src="https://user-images.githubusercontent.com/52837541/207909023-b1d3f63f-ed8f-4488-8d59-be00ac720d83.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207909171-647718fc-d50b-4642-bc9f-39553496b672.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207917464-9b98f516-6fce-425c-9034-cc85efffaf73.jpg" width="300"> 
+<img src="https://user-images.githubusercontent.com/52837541/207909272-9ea94d0d-8f0e-419b-a863-5855b3ff13c7.jpg" width="300">
  
 </p>
 //
