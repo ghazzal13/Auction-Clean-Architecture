@@ -29,11 +29,10 @@ In feed screen the user found the auctions that is coming soon, and he can categ
 </p> 
 
 When you click on the postcard the Auction details screen will opine, in this screen shows up post image and date and remaining thime and price and all information and shows to you the comments in the post and you can comment on the post easily, if the auction is started will show to you the bids, If you are the owner of the item in the auction the edit choose will show to you and you can edit the auction details.
-<p align="center"> 
- post diteals
-<img src="https://user-images.githubusercontent.com/52837541/207909098-c966f711-260c-47b2-a788-130cf634ea11.jpg" width="300"> 
-<img src="https://user-images.githubusercontent.com/52837541/207909178-e1f3a32f-1ac1-4ec9-ba2b-45986bec2ace.jpg" width="300"> 
-<img src="https://user-images.githubusercontent.com/52837541/207909333-b46af61b-fef8-436e-b2dd-8e33f9975479.jpg" width="300"> 
+<p align="center">  
+<img src="https://user-images.githubusercontent.com/52837541/207909098-c966f711-260c-47b2-a788-130cf634ea11.jpg" width="270"> 
+<img src="https://user-images.githubusercontent.com/52837541/207909333-b46af61b-fef8-436e-b2dd-8e33f9975479.jpg" width="270"> 
+<img src="https://user-images.githubusercontent.com/52837541/207909178-e1f3a32f-1ac1-4ec9-ba2b-45986bec2ace.jpg" width="270"> 
 </p>
 
 
@@ -41,9 +40,9 @@ When you click on the postcard the Auction details screen will opine, in this sc
 
 <p align="center"> 
     
-<img src="https://user-images.githubusercontent.com/52837541/207909009-129808c8-a012-4262-a51b-a4f73c3a3355.jpg" width="300">  
-<img src="https://user-images.githubusercontent.com/52837541/207909055-38ff59b1-28f6-419a-b071-7204e9bc3d23.jpg" width="300"> 
-<img src="https://user-images.githubusercontent.com/52837541/207909074-cb511d00-d1a3-402d-a650-266da1bd3784.jpg" width="300">
+<img src="https://user-images.githubusercontent.com/52837541/207909009-129808c8-a012-4262-a51b-a4f73c3a3355.jpg" width="270">  
+<img src="https://user-images.githubusercontent.com/52837541/207909055-38ff59b1-28f6-419a-b071-7204e9bc3d23.jpg" width="270"> 
+<img src="https://user-images.githubusercontent.com/52837541/207909074-cb511d00-d1a3-402d-a650-266da1bd3784.jpg" width="270">
 
 </p>
 
