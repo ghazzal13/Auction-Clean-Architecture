@@ -11,6 +11,15 @@ Firstly, I develop three onboarding screens.
  
 </p>
 
+In feed screen the user found thw auctions that is coming soon, and he can categorize the auctions in(caras, mobiles, Antiques, paintings, furniture electronic devices).
+
+
+<p align="center"> 
+
+<img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="300">
+ 
+</p>
+
 
 ![Screenshot_2022-12-15-18-00-46-21_4e0a55a4e546a0017073e8eda5b0c691](https://user-images.githubusercontent.com/52837541/207908958-7fb87a31-cd4b-4ff7-97ff-729bfecba1d7.jpg)
 ![Screenshot_2022-12-15-18-00-53-01_4e0a55a4e546a0017073e8eda5b0c691](https://user-images.githubusercontent.com/52837541/207908969-46bc2a62-0729-4b6e-bb14-154b97cbc4dd.jpg)
