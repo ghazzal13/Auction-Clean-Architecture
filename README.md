@@ -15,10 +15,8 @@ In feed screen the user found thw auctions that is coming soon, and he can categ
 
 
 <p align="center"> 
-
-<img src="https://user-images.githubusercontent.com/52837541/207908883-93dd1081-e1aa-4664-9692-fc038a240a5d.jpg" width="300">
  
-</p>
+ 
 
 
 
@@ -36,3 +34,5 @@ In feed screen the user found thw auctions that is coming soon, and he can categ
 <img src="https://user-images.githubusercontent.com/52837541/207909178-e1f3a32f-1ac1-4ec9-ba2b-45986bec2ace.jpg" width="300">
 <img src="https://user-images.githubusercontent.com/52837541/207909272-9ea94d0d-8f0e-419b-a863-5855b3ff13c7.jpg" width="300">
 <img src="https://user-images.githubusercontent.com/52837541/207909333-b46af61b-fef8-436e-b2dd-8e33f9975479.jpg" width="300">
+
+</p>
