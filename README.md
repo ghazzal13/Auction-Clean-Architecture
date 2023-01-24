@@ -1,5 +1,5 @@
-**Mazadat** is an application where you can add unused value items you have and other user can bid on your item in the time
-you determined. And I added some Animation Widgets to improve the user interface.
+**Mazadat** is an developed an auction application that allows users to browse and bid on a variety of items, The app features a sleek and intuitive interface that makes it easy for users to navigate and find the items they are interested in.
+Users can view detailed information about each item, including images, descriptions, remaining time, and the current bid amount. They can also place bids and write comments on items, The app also includes a search function that allows users to find specific items.
  
 Firstly, I develop three onboarding screens.
 
